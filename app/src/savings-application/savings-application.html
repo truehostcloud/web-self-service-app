@@ -38,8 +38,8 @@
                 </br>
                 <md-input-container class="md-block" ng-if="vm.form.productId">
                     <label>{{ 'label.input.interestCalculatedUsing' | translate }}</label>
-                    <md-select ng-model="vm.form.interestCalculatedUsing" ng-change="" required>
-                        <md-option ng-repeat="" ng-value="">{{  }}</md-option>
+                    <md-select ng-model="vm.form.interestCalculationType" required>
+                        <md-option ng-repeat="type in vm.template.interestCalculationTypeOptions" ng-value="type.id">{{ type.value }}</md-option>
                     </md-select>
                 </md-input-container>
                 </br>
