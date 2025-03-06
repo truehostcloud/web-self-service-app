@@ -210,3 +210,17 @@ $table-border-color:            #e0e0e0;
     }
   }
 }
+
+.clickable-row {
+    cursor: pointer;
+    transition: all .5s ease;
+    
+    &:hover {
+        background-color: rgba(158, 158, 158, 0.1);
+    }
+}
+
+.md-whiteframe-2dp {
+    position: relative;
+    z-index: 2;
+}

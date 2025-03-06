@@ -33,7 +33,12 @@
                             </thead>
                             <tbody md-body>
                             <tr md-row md-select="account" md-select-id="{{loanAccount.name}}" md-auto-select
-                                ng-repeat="loanAccount in vm.loanAccounts | filter: vm.loanFilter | orderBy: vm.query.orderBy | limitTo: vm.query.limit : (vm.query.offset - 1) * vm.query.limit" ng-click="vm.routeTo( 'loan',loanAccount.id)">
+                                ng-repeat="loanAccount in vm.loanAccounts | filter: vm.loanFilter | orderBy: vm.query.orderBy | limitTo: vm.query.limit : (vm.query.offset - 1) * vm.query.limit" 
+                                ng-click="vm.routeTo( 'loan',loanAccount.id)"
+                                class="clickable-row"
+                                ng-class="{'md-whiteframe-2dp': hover}"
+                                ng-mouseenter="hover = true"
+                                ng-mouseleave="hover = false">
                                 <td md-cell>
                                     <i ng-hide="loanAccount.inArrears" class="fa fa-stop fa-2x {{loanAccount.status.code | StatusLookup}}">
                                         <md-tooltip md-direction="top">{{loanAccount.status.value}}</md-tooltip>
