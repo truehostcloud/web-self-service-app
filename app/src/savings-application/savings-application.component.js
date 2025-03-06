@@ -9,7 +9,7 @@
      * @description
      * Controls Application for Savings
      */
-    function SavingsApplicationCtrl($scope) {
+    function SavingsApplicationCtrl($scope, $filter, $mdToast, AccountService, SavingsApplicationService) {
         var vm = this;
         vm.form = {};
 
