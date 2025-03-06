@@ -72,7 +72,36 @@
         }
 
         function submit() {
-
+            var savingsTemp = {
+                clientId: vm.clientId,
+                productId: vm.form.productId,
+                nominalAnnualInterestRate: vm.form.nominalAnnualInterest,
+                interestCompoundingPeriodType: vm.form.interestCompoundingPeriodType,
+                interestPostingPeriodType: vm.form.interestPostingPeriodType,
+                interestCalculationType: vm.form.interestCalculationType,
+                interestCalculationDaysInYearType: vm.form.interestCalculationDaysInYearType,
+                submittedOnDate: vm.form.submittedOnDate
+            };
+            var data = Object.assign({}, savingsTemp, {
+                locale: vm.form.locale,
+                dateFormat: vm.form.dateFormat
+            });
+            SavingsApplicationService.submitApplication().submit(data).$promise.then(function() {
+                clearForm();
+                $mdToast.show(
+                    $mdToast.simple()
+                        .content("Savings Account Application Submitted Successfully")
+                        .hideDelay(2000)
+                        .position('top right')
+                );
+            }, function(){
+                $mdToast.show(
+                    $mdToast.simple()
+                        .content("Error Creating Savings Account Application")
+                        .hideDelay(2000)
+                        .position('top right')
+                );
+            });
         }
     }
 })();
