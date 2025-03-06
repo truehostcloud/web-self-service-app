@@ -11,7 +11,16 @@
      */
     function SharesApplicationCtrl($scope, $filter, $mdToast, AccountService, SharesApplicationService) {
         var vm = this;
+        vm.form = {
+            locale: 'en_GB',
+            dateFormat: 'dd MMMM yyyy'
+        };
+        vm.template = {};
+        vm.clientId = null;
+        vm.savingsAccounts = [];
 
+        vm.init = init;
+        vm.getSharesTemplate = getSharesTemplate;
         vm.clearForm = clearForm;
         vm.submit = submit;
         vm.form = {};
