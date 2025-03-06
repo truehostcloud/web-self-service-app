@@ -94,7 +94,12 @@
         function clearForm() {
             $scope.shareApplicationForm.$setPristine();
             $scope.shareApplicationForm.$setUntouched();
-            vm.form = {};
+            vm.template = {};
+            vm.form = {
+                locale: 'en_GB',
+                dateFormat: 'dd MMMM yyyy'
+            };
+            init();
         }
 
         function submit() {
