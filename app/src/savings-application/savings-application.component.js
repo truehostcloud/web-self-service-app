@@ -11,8 +11,15 @@
      */
     function SavingsApplicationCtrl($scope, $filter, $mdToast, AccountService, SavingsApplicationService) {
         var vm = this;
-        vm.form = {};
+        vm.form = {
+            locale: 'en_GB',
+            dateFormat: 'dd MMMM yyyy'
+        };
+        vm.template = {};
+        vm.clientId = null;
 
+        vm.init = init;
+        vm.getSavingsTemplate = getSavingsTemplate;
         vm.clearForm = clearForm;
         vm.submit = submit;
         vm.form = {};
