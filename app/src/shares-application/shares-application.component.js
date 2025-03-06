@@ -103,8 +103,36 @@
         }
 
         function submit() {
+            var sharesTemp = {
+                clientId: vm.clientId,
+                productId: vm.form.productId,
+                requestedShares: vm.form.requestedShares,
+                savingsAccountId: vm.form.savingsAccountId,
+                submittedDate: vm.form.submittedDate,
+                applicationDate: $filter('date')(vm.form.applicationDate, 'dd MMMM yyyy')
+            };
+            
+            var data = Object.assign({}, sharesTemp, {
+                locale: vm.form.locale,
+                dateFormat: vm.form.dateFormat
+            });
 
+            SharesApplicationService.submitApplication().submit(data).$promise.then(function() {
+                clearForm();
+                $mdToast.show(
+                    $mdToast.simple()
+                        .content("Shares Account Application Submitted Successfully")
+                        .hideDelay(2000)
+                        .position('top right')
+                );
+            }, function(){
+                $mdToast.show(
+                    $mdToast.simple()
+                        .content("Error Creating Shares Account Application")
+                        .hideDelay(2000)
+                        .position('top right')
+                );
+            });
         }
-
     }
 })();
