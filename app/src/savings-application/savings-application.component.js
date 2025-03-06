@@ -40,7 +40,6 @@
                 if (!productId) {
                     vm.template = template;
                 } else {
-                    // Replace spread operator with Object.assign
                     vm.form = Object.assign({}, vm.form, {
                         productId: template.savingsProductId,
                         nominalAnnualInterest: template.nominalAnnualInterestRate,
