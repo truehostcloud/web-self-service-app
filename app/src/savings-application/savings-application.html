@@ -45,8 +45,8 @@
                 </br>
                 <md-input-container class="md-block" ng-if="vm.form.productId">
                     <label>{{ 'label.input.daysInYear' | translate }}</label>
-                    <md-select ng-model="vm.form.daysInYear" ng-change="" required>
-                        <md-option ng-repeat="" ng-value="">{{  }}</md-option>
+                    <md-select ng-model="vm.form.interestCalculationDaysInYearType" required>
+                        <md-option ng-repeat="type in vm.template.interestCalculationDaysInYearTypeOptions" ng-value="type.id">{{ type.value }}</md-option>
                     </md-select>
                 </md-input-container>
                 </br>
