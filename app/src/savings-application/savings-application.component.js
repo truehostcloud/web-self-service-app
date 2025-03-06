@@ -40,8 +40,8 @@
                 if (!productId) {
                     vm.template = template;
                 } else {
-                    vm.form = {
-                        ...vm.form,
+                    // Replace spread operator with Object.assign
+                    vm.form = Object.assign({}, vm.form, {
                         productId: template.savingsProductId,
                         nominalAnnualInterest: template.nominalAnnualInterestRate,
                         interestCompoundingPeriodType: template.interestCompoundingPeriodType.id,
@@ -49,7 +49,7 @@
                         interestCalculationType: template.interestCalculationType.id,
                         interestCalculationDaysInYearType: template.interestCalculationDaysInYearType.id,
                         submittedOnDate: $filter('date')(new Date(), 'dd MMMM yyyy')
-                    };
+                    });
                     
                     vm.template.interestCompoundingPeriodTypeOptions = template.interestCompoundingPeriodTypeOptions;
                     vm.template.interestPostingPeriodTypeOptions = template.interestPostingPeriodTypeOptions;
