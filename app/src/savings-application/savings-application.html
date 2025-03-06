@@ -12,7 +12,9 @@
                 <md-input-container class="md-block md-icon-float">
                     <label>{{ 'label.input.savingsproductOptions' | translate }}</label>
                     <md-select ng-model="vm.form.productId" ng-change="vm.getSavingsTemplate(vm.clientId, vm.form.productId)" required>
-                        <md-option ng-repeat="productOption in vm.template.productOptions" ng-value="productOption.id">{{ productOption.name }}</md-option>
+                        <md-option ng-repeat="productOption in vm.template.productOptions track by productOption.id" ng-value="productOption.id">
+                            {{ productOption.name }}
+                        </md-option>
                     </md-select>
                 </md-input-container>
                 <br />
