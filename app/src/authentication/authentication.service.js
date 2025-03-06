@@ -15,6 +15,7 @@
                 isAuthenticated = true;
                 role = USER_ROLES.user;
                 userData = data;
+                $http.defaults.headers.common.Authorization = 'Basic ' + data.base64EncodedAuthenticationKey;
             }
         })
 
