@@ -9,7 +9,7 @@
      * @description
      * Controls Application for Shares
      */
-    function SharesApplicationCtrl($scope) {
+    function SharesApplicationCtrl($scope, $filter, $mdToast, AccountService, SharesApplicationService) {
         var vm = this;
 
         vm.clearForm = clearForm;
