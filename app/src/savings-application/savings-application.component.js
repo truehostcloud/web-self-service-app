@@ -63,7 +63,12 @@
         function clearForm() {
             $scope.savingsApplicationForm.$setPristine();
             $scope.savingsApplicationForm.$setUntouched();
-            vm.form = {};
+            vm.template = {};
+            vm.form = {
+                locale: 'en_GB',
+                dateFormat: 'dd MMMM yyyy'
+            };
+            init();
         }
 
         function submit() {
