@@ -44,6 +44,7 @@
                 vm.form.principal = vm.template.principal;
                 vm.form.submittedOnDate = $filter('date','dd MMMM yyyy')(new Date(), 'dd MMMM yyyy');
                 vm.form.expectedDisbursementDate = $filter('date')(new Date(), 'dd MMMM yyyy');
+                vm.form.transactionProcessingStrategyCode = template.transactionProcessingStrategyCode;
             });
         }
 
@@ -71,7 +72,7 @@
                 amortizationType: vm.template.amortizationType.id,
                 interestType: vm.template.interestType.id,
                 interestCalculationPeriodType: vm.template.interestCalculationPeriodType.id,
-                transactionProcessingStrategyId: vm.template.transactionProcessingStrategyId
+                transactionProcessingStrategyCode: vm.template.transactionProcessingStrategyId
             };
             var data = Object.assign({}, loanTemp, vm.form);
             LoanApplicationService.loan().save(data).$promise.then(function() {
