@@ -206,6 +206,7 @@
                 .state('app.applyshares', {
                     url: '/shares/apply',
                     templateUrl: 'src/shares-application/shares-application.html',
+                    controller: 'SharesApplicationCtrl',
                     controllerAs: 'vm'
                 })
                 .state('login', {
