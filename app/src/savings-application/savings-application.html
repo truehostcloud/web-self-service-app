@@ -31,8 +31,8 @@
                 </br>
                 <md-input-container class="md-block" ng-if="vm.form.productId">
                     <label>{{ 'label.input.interestPostingPeriod' | translate }}</label>
-                    <md-select ng-model="vm.form.interestPostingPeriod" ng-change="" required>
-                        <md-option ng-repeat="" ng-value="">{{  }}</md-option>
+                    <md-select ng-model="vm.form.interestPostingPeriodType" required>
+                        <md-option ng-repeat="period in vm.template.interestPostingPeriodTypeOptions" ng-value="period.id">{{ period.value }}</md-option>
                     </md-select>
                 </md-input-container>
                 </br>
