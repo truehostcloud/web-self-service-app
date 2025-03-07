@@ -2,7 +2,7 @@ name: Docker Build on PR
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [ develop ]
 
 jobs:
   build:
