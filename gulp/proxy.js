@@ -21,7 +21,7 @@ var chalk = require('chalk');
 /*
  * Location of your backend server
  */
-var proxyTarget = 'https://localhost:8443';
+var proxyTarget = 'http://server/context/';
 
 var proxy = httpProxy.createProxyServer({
   target: proxyTarget
