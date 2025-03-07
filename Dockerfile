@@ -1,54 +1,72 @@
-FROM node:8.17.0 AS builder
+# Use Alpine Linux as the base image
+FROM alpine:3.18 AS base
 
-# Install Ruby 3.4.1
-RUN apt-get update && apt-get install -y \
-    build-essential \
+# Install dependencies for Ruby and Node.js
+RUN apk update && apk add --no-cache \
+    build-base \
     git \
     curl \
-    libssl-dev \
-    libreadline-dev \
-    zlib1g-dev \
-    autoconf \
-    bison \
-    libyaml-dev \
-    libncurses5-dev \
-    libffi-dev
+    libffi-dev \
+    openssl-dev \
+    readline-dev \
+    zlib-dev
 
-# Install rbenv and ruby-build
-RUN git clone https://github.com/rbenv/rbenv.git ~/.rbenv
-RUN git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
-RUN echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
-RUN echo 'eval "$(rbenv init -)"' >> ~/.bashrc
-ENV PATH /root/.rbenv/bin:$PATH
-RUN echo 'eval "$(rbenv init -)"' >> ~/.bashrc && eval "$(rbenv init -)"
+# Install Node.js 8.17.0
+RUN curl -fsSL https://nodejs.org/dist/v8.17.0/node-v8.17.0-linux-x64.tar.xz -o node.tar.xz && \
+    tar -xJf node.tar.xz -C /usr/local --strip-components=1 && \
+    rm node.tar.xz
 
 # Install Ruby 3.4.1
-RUN rbenv install 3.4.1
-RUN rbenv global 3.4.1
-RUN eval "$(rbenv init -)" && gem install sass
+RUN curl -fsSL https://cache.ruby-lang.org/pub/ruby/3.4/ruby-3.4.1.tar.gz -o ruby.tar.gz && \
+    tar -xzf ruby.tar.gz && \
+    cd ruby-3.4.1 && \
+    ./configure --disable-install-doc --prefix=/usr/local && \
+    make -j$(nproc) && \
+    make install && \
+    cd .. && \
+    rm -rf ruby-3.4.1 ruby.tar.gz
 
-# Setup app directory
+# Verify installations
+RUN node -v && npm -v && ruby -v
+
+# Set up the working directory
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
+
+# Set up PATH for node modules
 ENV PATH="/usr/src/app/node_modules/.bin:$PATH"
 
-# Install Node dependencies
+# Copy package.json and gulpfile.js
 COPY package.json /usr/src/app/package.json
 COPY gulpfile.js /usr/src/app/gulpfile.js
-RUN npm install bower
-RUN npm install gulp-cli
-COPY . /usr/src/app
-RUN bower --allow-root install
+
+# Install global npm packages
+RUN npm install bower gulp-cli -g
+
+# Install project dependencies
 RUN npm install -f
-RUN npm install --save-dev gulp
-RUN npm install --save-dev gulp-inject
-RUN npm install --save-dev gulp-ruby-sass
+RUN npm install --save-dev gulp gulp-inject gulp-ruby-sass
 
-# Build the app
-RUN eval "$(rbenv init -)" && gulp build
+# Install Sass
+RUN gem install sass
 
-# Use nginx to serve the application
+# Copy the rest of the application
+COPY . /usr/src/app
+
+# Install Bower components
+RUN bower --allow-root install
+
+# Build the project
+RUN gulp build
+
+# Serve the app with Nginx
 FROM nginx:1.19.3
-COPY --from=builder /usr/src/app/dist /usr/share/nginx/html
+
+# Copy the built files from the builder stage
+COPY --from=base /usr/src/app/dist /usr/share/nginx/html
+
+# Expose port 80
 EXPOSE 80
+
+# Start Nginx
 CMD ["nginx", "-g", "daemon off;"]
