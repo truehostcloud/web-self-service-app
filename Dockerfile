@@ -1,15 +1,19 @@
-FROM alpine:3.15
+FROM debian:buster-slim AS builder
 
-# Install basic dependencies
-RUN apk add --no-cache \
-    nodejs~=8.17 \
-    npm \
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    curl \
+    gnupg \
     git \
-    ruby~=2.7 \
-    ruby-dev \
-    build-base
+    build-essential \
+    ruby \
+    ruby-dev
 
-# Install sass
+# Install Node.js 8.x
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
+RUN apt-get install -y nodejs
+
+# Install Sass
 RUN gem install sass
 
 # Set up the working directory
@@ -33,7 +37,7 @@ RUN npm install --save-dev gulp-ruby-sass
 RUN gulp build
 
 # Use nginx to serve the application
-FROM nginx:1.19.3-alpine
-COPY --from=0 /usr/src/app/dist /usr/share/nginx/html
+FROM nginx:1.19.3
+COPY --from=builder /usr/src/app/dist /usr/share/nginx/html
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
