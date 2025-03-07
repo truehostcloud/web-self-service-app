@@ -1,46 +1,54 @@
-FROM mhart/alpine-node:8.9.4 AS builder
+FROM node:8.17.0 AS builder
 
-# Install dependencies
-RUN apk update && apk add --no-cache git ruby ruby-dev build-base
+# Install Ruby 3.4.1
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    git \
+    curl \
+    libssl-dev \
+    libreadline-dev \
+    zlib1g-dev \
+    autoconf \
+    bison \
+    libyaml-dev \
+    libncurses5-dev \
+    libffi-dev
 
-# Install Sass
-RUN gem install sass
+# Install rbenv and ruby-build
+RUN git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+RUN git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
+RUN echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
+RUN echo 'eval "$(rbenv init -)"' >> ~/.bashrc
+ENV PATH /root/.rbenv/bin:$PATH
+RUN echo 'eval "$(rbenv init -)"' >> ~/.bashrc && eval "$(rbenv init -)"
 
-# Set up the working directory
+# Install Ruby 3.4.1
+RUN rbenv install 3.4.1
+RUN rbenv global 3.4.1
+RUN eval "$(rbenv init -)" && gem install sass
+
+# Setup app directory
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
-
-# Set up PATH for node modules
 ENV PATH="/usr/src/app/node_modules/.bin:$PATH"
 
-# Copy package.json and gulpfile.js
+# Install Node dependencies
 COPY package.json /usr/src/app/package.json
 COPY gulpfile.js /usr/src/app/gulpfile.js
-
-# Install global npm packages
-RUN npm install bower gulp-cli -g
-
-# Install project dependencies
-RUN npm install -f
-RUN npm install --save-dev gulp gulp-inject gulp-ruby-sass
-
-# Copy the rest of the application
+RUN npm install bower
+RUN npm install gulp-cli
 COPY . /usr/src/app
-
-# Install Bower components
 RUN bower --allow-root install
+RUN npm install -f
+RUN npm install --save-dev gulp
+RUN npm install --save-dev gulp-inject
+RUN npm install --save-dev gulp-ruby-sass
 
-# Build the project
-RUN gulp build
+# Build the app
+RUN eval "$(rbenv init -)" && gulp build
 
-# Use Nginx to serve the app
+# Use nginx to serve the application
 FROM nginx:1.19.3
-
-# Copy the built files from the builder stage
 COPY --from=builder /usr/src/app/dist /usr/share/nginx/html
-
-# Expose port 80
 EXPOSE 80
-
-# Start Nginx
 CMD ["nginx", "-g", "daemon off;"]
