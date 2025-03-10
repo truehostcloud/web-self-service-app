@@ -15,7 +15,7 @@ RUN chmod +x /entrypoint.sh
 # Set default SERVER_NAME environment variable
 ENV SERVER_NAME=_
 
-EXPOSE 80
+EXPOSE 8090
 
 # Use our custom entrypoint script
 ENTRYPOINT ["/entrypoint.sh"]
