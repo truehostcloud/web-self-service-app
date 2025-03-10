@@ -3,8 +3,8 @@
 
   angular.module('selfService')
 
-	// .constant("BASE_URL", window.location.origin + "/fineract-provider/api/v1")
-	.constant("BASE_URL", "https://localhost:8443/fineract-provider/api/v1")
+	.constant("BASE_URL", window.location.origin + "/fineract-provider/api/v1")
+	// .constant("BASE_URL", "https://localhost:8443/fineract-provider/api/v1")
 
 	.constant('AUTH_EVENTS', {
 		updateUser: 'update-user',
