@@ -60,7 +60,12 @@
         }
 
         this.register = function(data) {
-            return $http.post(BASE_URL + '/self/registration',data);
+            const config = {
+                headers: {
+                    Authorization: undefined
+                }
+            };
+            return $http.post(BASE_URL + '/self/registration', data, config);
         }
 
         this.verifyUser = function(data){
