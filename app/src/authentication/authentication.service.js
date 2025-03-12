@@ -48,7 +48,14 @@
 
         //Resource for REST APIs
         this.doLogin = function() {
-            return $resource(BASE_URL +'/self/authentication');
+            return $resource(BASE_URL +'/self/authentication', {}, {
+                'save': {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': undefined
+                    }
+                }
+            });
         }
 
         this.logout = function() {
