@@ -46,7 +46,9 @@
 
         function downloadDocument(documentId) {
             vm.downloading[documentId] = true;
-            const docInfo = vm.documents.find(doc => doc.id === documentId);
+            const docInfo = vm.documents.find(function(doc) {
+                return doc.id === documentId;
+            });
             const filename = docInfo ? docInfo.fileName : 'document';
             
             UploadDocumentsService.downloadDocument().get({ 
