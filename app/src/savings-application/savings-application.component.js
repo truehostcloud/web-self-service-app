@@ -89,14 +89,14 @@
                 clearForm();
                 $mdToast.show(
                     $mdToast.simple()
-                        .content("Savings Account Application Submitted Successfully")
+                        .textContent("Savings Account Application Submitted Successfully")
                         .hideDelay(2000)
                         .position('top right')
                 );
             }, function(){
                 $mdToast.show(
                     $mdToast.simple()
-                        .content("Error Creating Savings Account Application")
+                        .textContent("Error Creating Savings Account Application")
                         .hideDelay(2000)
                         .position('top right')
                 );

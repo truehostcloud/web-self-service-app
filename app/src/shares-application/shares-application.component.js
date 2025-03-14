@@ -43,7 +43,7 @@
                 console.error('Error fetching savings accounts:', error);
                 $mdToast.show(
                     $mdToast.simple()
-                        .content("Error loading savings accounts")
+                        .textContent("Error loading savings accounts")
                         .hideDelay(2000)
                         .position('top right')
                 );
@@ -84,7 +84,7 @@
                 console.error('Error fetching shares template:', error);
                 $mdToast.show(
                     $mdToast.simple()
-                        .content("Error loading share products")
+                        .textContent("Error loading share products")
                         .hideDelay(2000)
                         .position('top right')
                 );
@@ -121,14 +121,14 @@
                 clearForm();
                 $mdToast.show(
                     $mdToast.simple()
-                        .content("Shares Account Application Submitted Successfully")
+                        .textContent("Shares Account Application Submitted Successfully")
                         .hideDelay(2000)
                         .position('top right')
                 );
             }, function(){
                 $mdToast.show(
                     $mdToast.simple()
-                        .content("Error Creating Shares Account Application")
+                        .textContent("Error Creating Shares Account Application")
                         .hideDelay(2000)
                         .position('top right')
                 );
