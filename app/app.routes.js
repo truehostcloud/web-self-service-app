@@ -245,6 +245,16 @@
                         title: 'Verify User'
                     }
                 })
+                .state('app.documents', {
+                    url: '/documents',
+                    templateUrl: 'src/upload-documents/documents-list.html',
+                    controller: 'DocumentsListCtrl',
+                    controllerAs: 'vm',
+                    data: {
+                        title: 'Documents',
+                        authorizedRoles: [USER_ROLES.user]
+                    }
+                })
             }
         )
 })();
