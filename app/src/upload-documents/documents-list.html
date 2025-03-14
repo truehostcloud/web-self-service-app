@@ -1,0 +1,48 @@
+<div class="md-padding" layout="column">
+    <md-card>
+        <md-card-title>
+            <md-card-title-text>
+                <div layout="row" layout-align="space-between center">
+                    <span class="md-headline">Documents</span>
+                    <md-button class="md-raised md-primary" ng-click="vm.openUploadDialog($event)">
+                        <md-icon>add</md-icon>
+                        Add
+                    </md-button>
+                </div>
+            </md-card-title-text>
+        </md-card-title>
+
+        <md-card-content>
+            <md-table-container>
+                <table md-table>
+                    <thead md-head>
+                        <tr md-row>
+                            <th md-column>Name</th>
+                            <th md-column>Description</th>
+                            <th md-column>File Name</th>
+                            <th md-column>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody md-body>
+                        <tr md-row ng-repeat="document in vm.documents">
+                            <td md-cell>{{document.name}}</td>
+                            <td md-cell>{{document.description}}</td>
+                            <td md-cell>{{document.fileName}}</td>
+                            <td md-cell>
+                                <md-button class="md-icon-button md-primary" ng-click="vm.downloadDocument(document.id)" ng-disabled="vm.downloading[document.id]">
+                                    <md-icon>{{vm.downloading[document.id] ? 'hourglass_empty' : 'file_download'}}</md-icon>
+                                </md-button>
+                                <md-button class="md-icon-button md-warn" ng-click="vm.deleteDocument(document.id)">
+                                    <md-icon>delete</md-icon>
+                                </md-button>
+                            </td>
+                        </tr>
+                        <tr md-row ng-if="!vm.documents.length">
+                            <td md-cell colspan="4" class="md-text-center">No documents found</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </md-table-container>
+        </md-card-content>
+    </md-card>
+</div> 
