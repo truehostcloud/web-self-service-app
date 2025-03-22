@@ -255,6 +255,19 @@
                         authorizedRoles: [USER_ROLES.user]
                     }
                 })
+                .state('app.surveys', {
+                    url: '/surveys',
+                    templateUrl: 'src/surveys/surveys.html',
+                    controller: 'SurveysCtrl',
+                    controllerAs: 'vm'
+                })
+                .state('app.takeSurvey', {
+                    url: '/surveys/take-survey',
+                    templateUrl: 'src/surveys/take-survey/take-survey.html',
+                    controller: 'TakeSurveyCtrl',
+                    controllerAs: 'vm'
+                })
+                
             }
         )
 })();
