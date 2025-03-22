@@ -691,3 +691,32 @@ md-toolbar .md-menu {
   position: fixed;
 }
 
+.survey-question {
+    margin-bottom: 24px;
+    padding: 16px;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+
+    .question-text {
+        font-weight: 500;
+        color: rgba(0, 0, 0, 0.87);
+        margin-bottom: 16px;
+    }
+
+    .radio-group {
+        margin-left: 16px;
+        
+        md-radio-button {
+            margin: 8px 0;
+            
+            &.md-accent.md-checked .md-off {
+                border-color: #6E9B05;
+            }
+            
+            &.md-accent.md-checked .md-on {
+                background-color: #6E9B05;
+            }
+        }
+    }
+}
+
