@@ -1,18 +1,22 @@
 <div flex layout="row">
     <div layout="col" layout-align="start center" class="cover" flex-gt-md="70" hide-xs hide-sm>
         <div flex="60" class="cover-content">
-            <h1 class="md-display-2 cover-title">Self Service</h1>
-            <p class="md-headline">Self Service is designed by the Mifos Initiative - a global community that aims to
-                speed-up the elimination of poverty by enabling organizations to more effectively and efficiently
-                deliver responsible financial services to the world’s poor and unbanked.</p>
+            <h1 class="md-display-2 cover-title">Jisort Self-Service</h1>
+            <p class="md-headline">
+                Jisort Self-Service is designed to empower individuals and financial institutions with seamless,
+                efficient, and secure access to financial services. Our self-service platform enables users to manage
+                their accounts, access financial tools, and perform transactions anytime, anywhere. With Jisort, you can
+                take control of your financial operations effortlessly, leveraging our innovative solutions to
+                streamline workflows and enhance efficiency
+            </p>
         </div>
     </div>
-    <div class="login-container" flex flex-gt-md="30">
+    <div class="login-container" flex flex-gt-md="30" style="overflow-y: auto;">
         <div class="md-padding translate-container" layout="row" layout-align="end">
             <translate-helper></translate-helper>
         </div>
         <div flex class="logo" layout-margin>
-            <img width="200px" src="assets/images/MifosX_logo.png">
+            <img width="120px" src="assets/images/mifos_lg-logo.png">
             <h1 class="md-title">{{ 'login.heading.logintoyouraccount' | translate }}</h1>
         </div>
         <div flex="80" class="login-form" layout-padding>
@@ -27,7 +31,7 @@
                 </md-input-container>
 
                 <section layout="column" layout-align="start">
-                    <md-button type="submit" class="md-primary md-raised">{{ 'login.btn.login' | translate }}
+                    <md-button type="submit" class="md-raised" style="background-color: #80B800; color: white;">{{ 'login.btn.login' | translate }}
                     </md-button>
                     <md-button class="md-default" ui-sref="forgot">{{ 'login.btn.forgot' | translate }}</md-button>
                     <md-button class="md-primary" ui-sref="register">{{ 'login.btn.register' | translate }}</md-button>

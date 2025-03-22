@@ -33,7 +33,12 @@
                             </thead>
                             <tbody md-body>
                             <tr md-row md-select="account" md-select-id="{{loanAccount.name}}" md-auto-select
-                                ng-repeat="loanAccount in vm.loanAccounts | filter: vm.loanFilter | orderBy: vm.query.orderBy | limitTo: vm.query.limit : (vm.query.offset - 1) * vm.query.limit" ng-click="vm.routeTo( 'loan',loanAccount.id)">
+                                ng-repeat="loanAccount in vm.loanAccounts | filter: vm.loanFilter | orderBy: vm.query.orderBy | limitTo: vm.query.limit : (vm.query.offset - 1) * vm.query.limit" 
+                                ng-click="vm.routeTo( 'loan',loanAccount.id)"
+                                class="clickable-row"
+                                ng-class="{'md-whiteframe-2dp': hover}"
+                                ng-mouseenter="hover = true"
+                                ng-mouseleave="hover = false">
                                 <td md-cell>
                                     <i ng-hide="loanAccount.inArrears" class="fa fa-stop fa-2x {{loanAccount.status.code | StatusLookup}}">
                                         <md-tooltip md-direction="top">{{loanAccount.status.value}}</md-tooltip>
@@ -87,7 +92,11 @@
                             <tbody md-body>
                             <tr md-row md-select="account" md-select-id="{{savingsAccount.name}}" md-auto-select
                                 ng-repeat="savingsAccount in vm.savingsAccounts | filter: vm.savingFilter | orderBy: vm.query.orderBy | limitTo: vm.query.limit : (vm.query.offset - 1) * vm.query.limit"
-                                ng-click="vm.routeTo('savings',savingsAccount.id)">
+                                ng-click="vm.routeTo('savings',savingsAccount.id)"
+                                class="clickable-row"
+                                ng-class="{'md-whiteframe-2dp': hover}"
+                                ng-mouseenter="hover = true"
+                                ng-mouseleave="hover = false">
                                 <td md-cell>
                                     <i ng-show="savingsAccount.subStatus.id==0" class="fa fa-stop fa-2x {{savingsAccount.status.code | StatusLookup}}">
                                         <md-tooltip md-direction="top">{{savingsAccount.status.value}}</md-tooltip>
@@ -139,7 +148,12 @@
                                 </thead>
                                 <tbody md-body>
                                 <tr md-row md-select="account" md-select-id="{{shareAccount.name}}" md-auto-select
-                                    ng-repeat="shareAccount in vm.shareAccounts | filter: vm.shareFilter | orderBy: vm.query.orderBy | limitTo: vm.query.limit : (vm.query.offset - 1) * vm.query.limit" ng-click="vm.routeTo('shares',shareAccount.id)">
+                                    ng-repeat="shareAccount in vm.shareAccounts | filter: vm.shareFilter | orderBy: vm.query.orderBy | limitTo: vm.query.limit : (vm.query.offset - 1) * vm.query.limit" 
+                                    ng-click="vm.routeTo('shares',shareAccount.id)"
+                                    class="clickable-row"
+                                    ng-class="{'md-whiteframe-2dp': hover}"
+                                    ng-mouseenter="hover = true"
+                                    ng-mouseleave="hover = false">
                                     <td md-cell>
                                         <i class="fa fa-stop fa-2x {{shareAccount.status.code | StatusLookup}}">
                                             <md-tooltip md-direction="top">{{shareAccount.status.value}}</md-tooltip>

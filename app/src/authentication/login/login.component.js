@@ -41,7 +41,7 @@
                                 AuthService.logout();
                             }
                         })
-                        .catch(function () {
+                        .catch(function (error) {
                             vm.authenticating = false;
                             $mdToast.show(
                                 $mdToast.simple()
@@ -51,7 +51,7 @@
                             );
                             AuthService.logout();
                         })
-                }).catch(function () {
+                }).catch(function (error) {
                     vm.authenticating = false;
                     $mdToast.show(
                         $mdToast.simple()

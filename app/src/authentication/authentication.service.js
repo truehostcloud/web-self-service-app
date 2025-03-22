@@ -15,11 +15,13 @@
                 isAuthenticated = true;
                 role = USER_ROLES.user;
                 userData = data;
+                $http.defaults.headers.common.Authorization = 'Basic ' + data.base64EncodedAuthenticationKey;
             }
         })
 
         this.setUser = function (res) {
             storageService.setObject('user_profile', res);
+            $http.defaults.headers.common.Authorization = 'Basic ' + res.base64EncodedAuthenticationKey;
             isAuthenticated = true;
             userData = res;
             role = USER_ROLES.user;
@@ -46,7 +48,14 @@
 
         //Resource for REST APIs
         this.doLogin = function() {
-            return $resource(BASE_URL +'/self/authentication');
+            return $resource(BASE_URL +'/self/authentication', {}, {
+                'save': {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': undefined
+                    }
+                }
+            });
         }
 
         this.logout = function() {
@@ -58,7 +67,12 @@
         }
 
         this.register = function(data) {
-            return $http.post(BASE_URL + '/self/registration',data);
+            const config = {
+                headers: {
+                    Authorization: undefined
+                }
+            };
+            return $http.post(BASE_URL + '/self/registration', data, config);
         }
 
         this.verifyUser = function(data){
