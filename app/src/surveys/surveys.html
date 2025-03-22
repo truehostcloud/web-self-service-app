@@ -1,0 +1,61 @@
+<div class="datatable-cont md-padding">
+    <md-card>
+        <md-card-title layout-xs="column">
+            <md-card-title-text flex-xs>
+                <span class="md-headline">Surveys</span>
+            </md-card-title-text>
+            <md-button class="md-raised" style="background-color: #6E9B05; color: white;" ui-sref="app.takeSurvey">
+                <md-icon class="material-icons">list_alt</md-icon>
+                Take Survey
+            </md-button>
+        </md-card-title>
+        <md-divider></md-divider>
+        <md-card-content class="md-padding">
+            <md-input-container md-no-float class="md-block search-input">
+                <md-icon md-svg-src="assets/images/ic_search_black_24px.svg"></md-icon>
+                <input ng-model="vm.surveyFilter" type="text" placeholder="Filter">
+            </md-input-container>
+
+            <div flex layout="row" layout-align="center center" ng-if="vm.loadingSurveys">
+                <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                <span class="md-padding">Loading Surveys...</span>
+            </div>
+
+            <div flex layout="column" layout-align="center center" ng-if="vm.loadingError">
+                <p class="md-body-1">Failed to load surveys. Please try again.</p>
+                <md-button class="md-primary" ng-click="vm.retryLoading()">
+                    <md-icon class="material-icons">refresh</md-icon>
+                    Retry
+                </md-button>
+            </div>
+
+            <md-table-container ng-if="!vm.loadingSurveys && !vm.loadingError">
+                <table md-table ng-model="vm.selected" md-progress="vm.promise">
+                    <thead md-head md-order="vm.query.orderBy">
+                        <tr md-row>
+                            <th md-column md-order-by="name">Survey</th>
+                            <th md-column md-order-by="createdBy">Created By</th>
+                            <th md-column md-order-by="dateTime">DateTime</th>
+                            <th md-column md-numeric md-order-by="score">Score</th>
+                        </tr>
+                    </thead>
+                    <tbody md-body>
+                        <tr md-row md-select="survey" md-select-id="{{survey.name}}" md-auto-select
+                            ng-repeat="survey in vm.surveys | filter: vm.surveyFilter | orderBy: vm.query.orderBy | limitTo: vm.query.limit : (vm.query.offset - 1) * vm.query.limit">
+                            <td md-cell>{{survey.name}}</td>
+                            <td md-cell>{{survey.createdBy}}</td>
+                            <td md-cell>{{survey.dateTime | date:'medium'}}</td>
+                            <td md-cell>{{survey.score}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </md-table-container>
+            <md-table-pagination ng-if="!vm.loadingSurveys && !vm.loadingError" 
+                                md-limit="vm.query.limit" 
+                                md-page="vm.query.offset"
+                                md-total="{{vm.surveys.length}}" 
+                                md-page-select>
+            </md-table-pagination>
+        </md-card-content>
+    </md-card>
+</div> 
