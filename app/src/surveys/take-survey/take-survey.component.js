@@ -121,7 +121,67 @@
         //             vm.submitting = false;
         //         });
         // }
-        
+        function submitSurvey() {
+            // Validate survey data and client ID exist
+            if (!vm.surveyData || !vm.clientId) {
+                $mdToast.show(
+                    $mdToast.simple()
+                        .textContent('Please select a survey and answer all questions')
+                        .position('top right')
+                );
+                return;
+            }
+            
+            // Check for unanswered questions
+            var unansweredQuestions = vm.surveyData.questionDatas.some(function(q) {
+                return !q.answer;
+            });
+            
+            if (unansweredQuestions) {
+                $mdToast.show(
+                    $mdToast.simple()
+                        .textContent('Please answer all questions before submitting')
+                        .position('top right')
+                );
+                return;
+            }
+            
+            // Prepare scorecard data
+            var formData = {
+                clientId: vm.clientId,
+                scorecardValues: vm.surveyData.questionDatas.map(function(q) {
+                    return {
+                        questionId: q.id,
+                        responseId: q.answer.id,
+                        value: q.answer.value
+                    };
+                })
+            };
+            
+            // Submit survey
+            vm.submitting = true;
+            SurveysService.submitSurvey(vm.surveyData.id, formData)
+                .then(function() {
+                    $mdToast.show(
+                        $mdToast.simple()
+                            .textContent('Survey submitted successfully')
+                            .position('top right')
+                    );
+                    $state.go('app.surveys');
+                })
+                .catch(function(error) {
+                    console.error('Error submitting survey:', error);
+                    $mdToast.show(
+                        $mdToast.simple()
+                            .textContent('Failed to submit survey. Please try again.')
+                            .position('top right')
+                    );
+                })
+                .finally(function() {
+                    vm.submitting = false;
+                });
+        }
+
         function cancel() {
             $state.go('app.surveys');
         }
