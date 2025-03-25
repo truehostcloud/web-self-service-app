@@ -103,16 +103,6 @@
                         authorizedRoles: [USER_ROLES.user]
                     }
                 })
-                .state('app.profile', {
-                    url: '/charges',
-                    templateUrl: 'src/common/coming-soon.html',
-                    controller: 'ClientCtrl',
-                    controllerAs: 'vm',
-                    data: {
-                        title: 'Profile',
-                        authorizedRoles: [USER_ROLES.user]
-                    }
-                })
                 .state('app.transfers', {
                     url: '/transfers',
                     templateUrl: 'src/transfers/transfers.html',
@@ -267,7 +257,16 @@
                     controller: 'TakeSurveyCtrl',
                     controllerAs: 'vm'
                 })
-                
+                .state('app.profile', {
+                    url: '/profile',
+                    templateUrl: 'src/common/profile/profile.html',
+                    controller: 'ProfileCtrl',
+                    controllerAs: 'vm',
+                    data: {
+                        title: 'Profile',
+                        authorizedRoles: [USER_ROLES.user]
+                    }
+                })                
             }
         )
 })();
