@@ -13,6 +13,7 @@
         vm.toggleItemsList = toggleItemsList;
         vm.toggleRightSidebar = toggleRightSidebar;
         vm.logout = logout;
+        vm.goToProfile = goToProfile;
 
         vm.profile = getUserData();
 
@@ -63,6 +64,13 @@
 
         function logout() {
             AuthService.logout();
+        }
+
+        function goToProfile($mdMenu) {
+            $state.go('app.profile');
+            if ($mdMenu) {
+                $mdMenu.close();
+            }
         }
 
     }
