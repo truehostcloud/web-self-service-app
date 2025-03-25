@@ -92,6 +92,7 @@
                         .textContent("Savings Account Application Submitted Successfully")
                         .hideDelay(2000)
                         .position('top right')
+                        .toastClass('md-success')
                 );
             }, function(){
                 $mdToast.show(
@@ -99,6 +100,7 @@
                         .textContent("Error Creating Savings Account Application")
                         .hideDelay(2000)
                         .position('top right')
+                        .toastClass('md-error')
                 );
             });
         }

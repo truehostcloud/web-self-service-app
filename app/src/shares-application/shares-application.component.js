@@ -46,6 +46,7 @@
                         .textContent("Error loading savings accounts")
                         .hideDelay(2000)
                         .position('top right')
+                        .toastClass('md-error')
                 );
             });
         }
@@ -87,6 +88,7 @@
                         .textContent("Error loading share products")
                         .hideDelay(2000)
                         .position('top right')
+                        .toastClass('md-error')
                 );
             });
         }
@@ -124,6 +126,7 @@
                         .textContent("Shares Account Application Submitted Successfully")
                         .hideDelay(2000)
                         .position('top right')
+                        .toastClass('md-success')
                 );
             }, function(){
                 $mdToast.show(
@@ -131,6 +134,7 @@
                         .textContent("Error Creating Shares Account Application")
                         .hideDelay(2000)
                         .position('top right')
+                        .toastClass('md-error')
                 );
             });
         }

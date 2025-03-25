@@ -41,6 +41,7 @@
                     $mdToast.simple()
                         .textContent('Transfer Completed Successfully')
                         .position('top right')
+                        .toastClass('md-success')
                 );
             }, function (resp) {
                 var errors = '';
@@ -54,6 +55,7 @@
                     $mdToast.simple()
                         .textContent('Error in Completing Transfer: ' + errors)
                         .position('top right')
+                        .toastClass('md-error')
                 );
                 $mdDialog.hide("error");
 

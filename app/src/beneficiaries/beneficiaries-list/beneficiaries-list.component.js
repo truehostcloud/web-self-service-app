@@ -56,6 +56,7 @@
                        $mdToast.simple()
                            .textContent('Beneficiary Deleted Successfully')
                            .position('top right')
+                           .toastClass('md-success')
                    );
                    vm.beneficiaries = vm.beneficiaries.filter(function (benef) {
                        return benef.id !== beneficiary.id
@@ -66,6 +67,7 @@
                     $mdToast.simple()
                         .textContent('Error in Deleting Beneficiary')
                         .position('top right')
+                        .toastClass('md-error')
                 );
             });
         }

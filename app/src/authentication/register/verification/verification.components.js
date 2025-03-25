@@ -22,6 +22,7 @@
                     $mdToast.simple()
                         .textContent('User has been successfully registered')
                         .position('top right')
+                        .toastClass('md-success')
                 );
                 $location.path('/login');
                 vm.clearForm();
@@ -37,6 +38,7 @@
                     $mdToast.simple()
                         .textContent('Error in creating user: ' + errors)
                         .position('top right')
+                        .toastClass('md-error')
                 );
 
             });

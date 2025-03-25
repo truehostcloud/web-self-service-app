@@ -33,6 +33,7 @@
                     $mdToast.simple()
                         .textContent('Confirmation email is sent')              // The success part is not working as the response
                         .position('top right')                                  // is not in JSON format
+                        .toastClass('md-success')
                 );
                 vm.clearForm();
             }, function (resp) {
@@ -47,6 +48,7 @@
                         $mdToast.simple()
                             .textContent('Error in creating user: ' + errors)
                             .position('top right')
+                            .toastClass('md-error')
                     );
                 }
                 else{
@@ -54,6 +56,7 @@
                         $mdToast.simple()
                             .textContent('Confirmation email is sent')
                             .position('top right')
+                            .toastClass('md-success')
                     );
                     $location.path('/verify');
                     vm.clearForm();

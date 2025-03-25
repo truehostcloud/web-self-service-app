@@ -45,6 +45,7 @@
                                 .textContent("Document Uploaded Successfully")
                                 .hideDelay(2000)
                                 .position('top right')
+                                .toastClass('md-success')
                         );
                     })
                     .catch(function() {
@@ -53,6 +54,7 @@
                                 .textContent("Error Uploading Document")
                                 .hideDelay(2000)
                                 .position('top right')
+                                .toastClass('md-error')
                         );
                     });
             };

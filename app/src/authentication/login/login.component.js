@@ -29,6 +29,7 @@
                                         .textContent("Successful Login")
                                         .hideDelay(2000)
                                         .position('top right')
+                                        .toastClass('md-success')
                                 );
                 
                             } else {
@@ -37,6 +38,7 @@
                                         .textContent("No Clients Found")
                                         .hideDelay(2000)
                                         .position('top right')
+                                        .toastClass('md-warning')
                                 );
                                 AuthService.logout();
                             }
@@ -48,6 +50,7 @@
                                     .textContent("Not a Self Service User")
                                     .hideDelay(2000)
                                     .position('top right')
+                                    .toastClass('md-error')
                             );
                             AuthService.logout();
                         })
@@ -58,6 +61,7 @@
                             .textContent("Invalid Login Credentials")
                             .hideDelay(2000)
                             .position('top right')
+                            .toastClass('md-error')
                     );
                 })
         }

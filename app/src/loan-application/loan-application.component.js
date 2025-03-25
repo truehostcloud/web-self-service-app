@@ -82,6 +82,7 @@
                         .textContent("Loan Application Submitted Successfully")
                         .hideDelay(2000)
                         .position('top right')
+                        .toastClass('md-success')
                 );
             }, function(){
                 $mdToast.show(
@@ -89,6 +90,7 @@
                         .textContent("Error Creating Loan Application")
                         .hideDelay(2000)
                         .position('top right')
+                        .toastClass('md-error')
                 );
             });
         }

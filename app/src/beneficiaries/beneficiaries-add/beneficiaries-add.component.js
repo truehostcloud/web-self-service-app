@@ -48,6 +48,7 @@
                     $mdToast.simple()
                         .textContent('Add Beneficiary Cancelled')
                         .position('top right')
+                        .toastClass('md-error')
                 );
             });
         }
