@@ -20,6 +20,12 @@
             <h1 class="md-title">{{ 'login.heading.logintoyouraccount' | translate }}</h1>
         </div>
         <div flex="80" class="login-form" layout-padding>
+            <div ng-if="vm.formErrors.length > 0" class="form-errors" layout="column" layout-padding style="text-align: center;">
+                <div ng-repeat="error in vm.formErrors" class="error-message">
+                    {{error}}
+                </div>
+            </div>
+
             <form name="loginForm" ng-submit="doLogin()">
                 <md-input-container class="md-block md-icon-float">
                     <label>Username</label>
