@@ -1,0 +1,58 @@
+md-toast {
+    &.md-success {
+        .md-toast-content {
+            background-color: #4CAF50 !important;
+            color: #ffffff !important;
+        }
+    }
+
+    &.md-error {
+        .md-toast-content {
+            background-color: #f44336 !important;
+            color: #ffffff !important;
+        }
+    }
+
+    &.md-warning {
+        .md-toast-content {
+            background-color: #ff9800 !important;
+            color: #ffffff !important;
+        }
+    }
+
+    &.md-info {
+        .md-toast-content {
+            background-color: #2196F3 !important;
+            color: #ffffff !important;
+        }
+    }
+
+    .md-toast-content {
+        height: 36px !important;
+        line-height: 36px !important;
+        padding: 0 16px !important;
+        min-width: 250px;
+        max-width: 350px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        border-radius: 4px;
+    }
+
+    .md-toast-text {
+        font-size: 14px;
+        font-weight: 500;
+        padding: 0;
+    }
+
+    .md-toast-message {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 1.4;
+    }
+
+    .md-toast-action {
+        font-weight: 500;
+        text-transform: uppercase;
+        font-size: 12px;
+        padding: 0 8px;
+    }
+}

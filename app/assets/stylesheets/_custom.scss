@@ -1,3 +1,5 @@
+@import 'toast';
+
 // COLORS
 $main-bg-color: #ECECEC;
 $text-color: #7A7A7A;
@@ -719,4 +721,79 @@ md-toolbar .md-menu {
         }
     }
 }
+
+.md-toast {
+  &.md-success {
+      background-color: #4CAF50;
+      .md-toast-content {
+          background-color: #4CAF50;
+      }
+      .md-toast-message {
+          color: #ffffff;
+      }
+      .md-toast-action {
+          color: #ffffff;
+      }
+  }
+
+  &.md-error {
+      background-color: #f44336;
+      .md-toast-content {
+          background-color: #f44336;
+      }
+      .md-toast-message {
+          color: #ffffff;
+      }
+      .md-toast-action {
+          color: #ffffff;
+      }
+  }
+
+  &.md-warning {
+      background-color: #ff9800;
+      .md-toast-content {
+          background-color: #ff9800;
+      }
+      .md-toast-message {
+          color: #ffffff;
+      }
+      .md-toast-action {
+          color: #ffffff;
+      }
+  }
+
+  &.md-info {
+      background-color: #2196F3;
+      .md-toast-content {
+          background-color: #2196F3;
+      }
+      .md-toast-message {
+          color: #ffffff;
+      }
+      .md-toast-action {
+          color: #ffffff;
+      }
+  }
+
+  .md-toast-content {
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      border-radius: 4px;
+      padding: 14px 16px;
+      min-width: 250px;
+      max-width: 350px;
+  }
+
+  .md-toast-message {
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 1.4;
+  }
+
+  .md-toast-action {
+      font-weight: 500;
+      text-transform: uppercase;
+      font-size: 12px;
+      padding: 0 8px;
+  }
+} 
 
