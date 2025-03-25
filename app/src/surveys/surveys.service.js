@@ -22,7 +22,7 @@
         this.submitSurvey = function(surveyId, formData) {
             return $http({
                 method: 'POST',
-                url: BASE_URL + '/surveys/scorecards/' + surveyId,
+                url: BASE_URL + '/self/surveys/scorecards/' + surveyId,
                 data: formData
             });
         };
