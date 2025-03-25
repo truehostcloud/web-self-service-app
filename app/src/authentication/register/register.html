@@ -7,6 +7,12 @@
 
             <div class="title">Create an account</div>
 
+            <div ng-if="vm.formErrors.length > 0" class="form-errors md-warn" layout="column" layout-padding>
+                <div ng-repeat="error in vm.formErrors" class="error-message">
+                    {{error}}
+                </div>
+            </div>
+
             <form name="registerForm" novalidate ng-submit="submit()">
                 <md-input-container class="md-block" md-no-float>
                     <input name="accountNumber" ng-model="vm.form.accountNumber" placeholder="Account number"
