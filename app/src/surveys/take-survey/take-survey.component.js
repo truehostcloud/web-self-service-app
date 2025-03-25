@@ -121,11 +121,6 @@
         //             vm.submitting = false;
         //         });
         // }
-
-        //log the survey data
-        function submitSurvey() {
-            console.log(vm.surveyData);
-        }
         
         function cancel() {
             $state.go('app.surveys');
