@@ -15,10 +15,10 @@
         this.getClientSurveys = function(clientId) {
             return $http({
                 method: 'GET',
-                url: BASE_URL + '/surveys/scorecards/clients/' + clientId
+                url: BASE_URL + '/self/surveys/scorecards/clients/' + clientId
             });
         };
-        
+
         this.submitSurvey = function(surveyId, formData) {
             return $http({
                 method: 'POST',
