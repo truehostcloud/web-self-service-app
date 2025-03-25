@@ -637,6 +637,12 @@ md-toolbar .md-menu {
           display: block;
           background-color: #6E9B05;
           color: #ffffff;
+
+          &[disabled] {
+            background-color: rgba(110, 155, 5, 0.4);
+            color: rgba(255, 255, 255, 0.6);
+            cursor: not-allowed;
+          }
         }
       }
 
@@ -651,6 +657,49 @@ md-toolbar .md-menu {
 
         .link {
 
+        }
+      }
+
+      .form-errors {
+        background-color: #ffebee;
+        border-radius: 4px;
+        margin-bottom: 16px;
+        padding: 12px;
+        border: 1px solid #ef9a9a;
+
+        .error-message {
+          color: #c62828;
+          font-size: 14px;
+          line-height: 1.5;
+          margin-bottom: 4px;
+          display: flex;
+          align-items: center;
+
+          &:before {
+            content: "!";
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            line-height: 16px;
+            text-align: center;
+            background-color: #c62828;
+            color: white;
+            border-radius: 50%;
+            margin-right: 8px;
+            font-size: 12px;
+          }
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+      }
+
+      md-input-container {
+        &.md-input-focused {
+          .md-input {
+            border-color: $accent-color;
+          }
         }
       }
     }
@@ -798,6 +847,42 @@ md-toolbar .md-menu {
       text-transform: uppercase;
       font-size: 12px;
       padding: 0 8px;
+  }
+}
+
+// Form Error Styles (Global)
+.form-errors {
+  background-color: #ffebee;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  padding: 12px;
+  border: 1px solid #ef9a9a;
+
+  .error-message {
+    color: #c62828;
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+
+    &:before {
+      content: "!";
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      line-height: 16px;
+      text-align: center;
+      background-color: #c62828;
+      color: white;
+      border-radius: 50%;
+      margin-right: 8px;
+      font-size: 12px;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 } 
 
