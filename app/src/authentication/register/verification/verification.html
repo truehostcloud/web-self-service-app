@@ -7,6 +7,10 @@
 
             <div class="title">Verification</div>
 
+            <div class="md-accent" style="text-align: center; padding: 16px; background-color: #f0f0f0; margin-bottom: 16px; border-radius: 4px;">
+                Please check your email for the Request ID and Authentication Token. If you haven't received the email, please check your spam folder.
+            </div>
+
             <form name="verificationForm" novalidate ng-submit="submit()">
                 <md-input-container class="md-block" md-no-float>
                     <input name="requestId" ng-model="vm.verifyData.requestId" placeholder="RequestID"
