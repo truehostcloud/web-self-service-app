@@ -2,17 +2,17 @@
     'use strict';
     
     angular.module('selfService')
-        .controller('SurveysCtrl', ['$scope', 'SurveysService', SurveysCtrl]);
+        .controller('SurveysCtrl', ['$scope','$mdToast', 'AccountService' ,'SurveysService', SurveysCtrl]);
 
-    function SurveysCtrl($scope, SurveysService) {
+    function SurveysCtrl($scope, $mdToast, AccountService, SurveysService) {
         var vm = this;
-        
+        vm.clientId = null;
         vm.loadingSurveys = false;
         vm.loadingError = false;
         vm.surveyFilter = '';
         vm.selected = [];
         vm.query = {
-            limit: 5,
+            limit: 10,
             offset: 1,
             orderBy: 'dateTime'
         };
@@ -21,17 +21,37 @@
         
         vm.takeSurvey = takeSurvey;
         vm.retryLoading = loadSurveys;
-        
+        vm.init = init;
+        vm.getClientSurveys = getClientSurveys;
+
         function loadSurveys() {
             vm.loadingSurveys = true;
             vm.loadingError = false;
-            SurveysService.getAllSurveys().then(function(response) {
+            init();
+        }
+
+        function init() {
+            AccountService.getClientId().then(function(clientId) {
+                vm.clientId = clientId;
+                getClientSurveys(clientId);
+            });
+        }
+
+        function getClientSurveys(clientId) {
+            SurveysService.getClientSurveys(clientId).then(function(response) {
                 vm.surveys = response.data;
                 vm.loadingSurveys = false;
+                console.log(vm.surveys);
             }).catch(function(error) {
                 vm.loadingSurveys = false;
                 vm.loadingError = true;
-                console.error('Error loading surveys:', error);
+                $mdToast.show(
+                    $mdToast.simple()
+                        .textContent("Error loading surveys",error)
+                        .hideDelay(2000)
+                        .position('top right')
+                        .toastClass('md-error')
+                );
             });
         }
         
