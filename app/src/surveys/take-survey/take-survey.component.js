@@ -63,66 +63,8 @@
             }
         }
         
-        // function submitSurvey() {
-        //     if (!vm.surveyData || !vm.clientId) {
-        //         $mdToast.show(
-        //             $mdToast.simple()
-        //                 .textContent('Please select a survey and answer all questions')
-        //                 .position('top right')
-        //         );
-        //         return;
-        //     }
-            
-        //     var unansweredQuestions = vm.surveyData.questionDatas.some(function(q) {
-        //         return q.answer === null;
-        //     });
-            
-        //     if (unansweredQuestions) {
-        //         $mdToast.show(
-        //             $mdToast.simple()
-        //                 .textContent('Please answer all questions before submitting')
-        //                 .position('top right')
-        //         );
-        //         return;
-        //     }
-            
-        //     var formData = {
-        //         userId: 1, // You might need to get this from somewhere
-        //         clientId: vm.clientId,
-        //         surveyId: vm.surveyData.id,
-        //         scorecardValues: vm.surveyData.questionDatas.map(function(q) {
-        //             return {
-        //                 questionId: q.id,
-        //                 responseId: q.answer.id,
-        //                 value: q.answer.value
-        //             };
-        //         })
-        //     };
-            
-        //     vm.submitting = true;
-        //     SurveysService.submitSurvey(vm.surveyData.id, formData)
-        //         .then(function() {
-        //             $mdToast.show(
-        //                 $mdToast.simple()
-        //                     .textContent('Survey submitted successfully')
-        //                     .position('top right')
-        //             );
-        //             $state.go('app.surveys');
-        //         })
-        //         .catch(function(error) {
-        //             console.error('Error submitting survey:', error);
-        //             $mdToast.show(
-        //                 $mdToast.simple()
-        //                     .textContent('Failed to submit survey. Please try again.')
-        //                     .position('top right')
-        //             );
-        //         })
-        //         .finally(function() {
-        //             vm.submitting = false;
-        //         });
-        // }
         function submitSurvey() {
-            // Validate survey data and client ID exist
+            
             if (!vm.surveyData || !vm.clientId) {
                 $mdToast.show(
                     $mdToast.simple()
@@ -132,7 +74,7 @@
                 return;
             }
             
-            // Check for unanswered questions
+            
             var unansweredQuestions = vm.surveyData.questionDatas.some(function(q) {
                 return !q.answer;
             });
@@ -146,7 +88,7 @@
                 return;
             }
             
-            // Prepare scorecard data
+            
             var formData = {
                 clientId: vm.clientId,
                 scorecardValues: vm.surveyData.questionDatas.map(function(q) {
@@ -158,7 +100,7 @@
                 })
             };
             
-            // Submit survey
+            
             vm.submitting = true;
             SurveysService.submitSurvey(vm.surveyData.id, formData)
                 .then(function() {
