@@ -8,6 +8,7 @@
 
         var vm = this;
         vm.authenticating = false;
+        vm.formErrors = [];
 
         /**
          * @method doLogin
@@ -15,6 +16,7 @@
          */
         $scope.doLogin = function () {
             vm.authenticating = true;
+            vm.formErrors = [];
             AuthService.doLogin().save($scope.loginData).$promise
                 .then(function (result) {
                     AuthService.setUser(result);
@@ -56,6 +58,7 @@
                         })
                 }).catch(function (error) {
                     vm.authenticating = false;
+                    vm.formErrors = ['Invalid login credentials. Please check your username and password.'];
                     $mdToast.show(
                         $mdToast.simple()
                             .textContent("Invalid Login Credentials")
