@@ -52,7 +52,7 @@
                     $mdToast.simple()
                         .textContent('Failed to load surveys. Please try again.')
                         .position('top right')
-                        .theme('md-error')
+                        .toastClass('md-error')
                 );
             });
         }
@@ -71,7 +71,7 @@
                     $mdToast.simple()
                         .textContent('Please select a survey and answer all questions')
                         .position('top right')
-                        .theme('md-warning')
+                        .toastClass('md-warning')
                 );
                 return;
             }
@@ -86,7 +86,7 @@
                     $mdToast.simple()
                         .textContent('Please answer all questions before submitting')
                         .position('top right')
-                        .theme('md-warning')
+                        .toastClass('md-warning')
                 );
                 return;
             }
@@ -111,7 +111,7 @@
                         $mdToast.simple()
                             .textContent('Survey submitted successfully')
                             .position('top right')
-                            .theme('md-success')
+                            .toastClass('md-success')
                     );
                     $state.go('app.surveys');
                 })
@@ -121,7 +121,7 @@
                         $mdToast.simple()
                             .textContent('Failed to submit survey. Please try again.')
                             .position('top right')
-                            .theme('md-error')
+                            .toastClass('md-error')
                     );
                 })
                 .finally(function() {
