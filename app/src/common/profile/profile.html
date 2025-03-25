@@ -1,0 +1,75 @@
+<div class="profile-container" layout="column" layout-padding>
+    <md-card class="profile-card">
+        <div layout="row" layout-align="center center" ng-if="vm.loading">
+            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+
+        <div layout="column" ng-if="!vm.loading">
+            <div class="profile-header" layout="row" layout-align="start center">
+                <div class="profile-image-container">
+                    <img ng-src="{{vm.profileImage}}" alt="Profile Image" 
+                         ng-if="vm.profileImage" class="profile-image">
+                    <md-icon md-svg-src="assets/images/ic_person_white_24px.svg" 
+                            ng-if="!vm.profileImage" class="default-avatar"></md-icon>
+                </div>
+                <div class="profile-info" layout="column">
+                    <h2 class="md-display-1">{{vm.profile.displayName}}</h2>
+                    <div layout="row" layout-align="start center">
+                        <span class="status-badge" ng-class="vm.getStatusClass(vm.profile.status)">
+                            {{vm.profile.status.value}}
+                        </span>
+                        <span class="account-number">Account: {{vm.profile.accountNo}}</span>
+                    </div>
+                </div>
+            </div>
+
+            <md-divider></md-divider>
+
+            <div class="profile-details" layout="row" layout-wrap>
+                <div flex="100" flex-gt-sm="50" class="detail-section">
+                    <h3 class="md-title">Personal Information</h3>
+                    <div class="detail-item" layout="row">
+                        <span class="label">First Name:</span>
+                        <span class="value">{{vm.profile.firstname}}</span>
+                    </div>
+                    <div class="detail-item" layout="row" ng-if="vm.profile.middlename">
+                        <span class="label">Middle Name:</span>
+                        <span class="value">{{vm.profile.middlename}}</span>
+                    </div>
+                    <div class="detail-item" layout="row">
+                        <span class="label">Last Name:</span>
+                        <span class="value">{{vm.profile.lastname}}</span>
+                    </div>
+                    <div class="detail-item" layout="row">
+                        <span class="label">Mobile:</span>
+                        <span class="value">{{vm.profile.mobileNo}}</span>
+                    </div>
+                    <div class="detail-item" layout="row">
+                        <span class="label">Email:</span>
+                        <span class="value">{{vm.profile.emailAddress}}</span>
+                    </div>
+                </div>
+
+                <div flex="100" flex-gt-sm="50" class="detail-section">
+                    <h3 class="md-title">Account Information</h3>
+                    <div class="detail-item" layout="row">
+                        <span class="label">Office:</span>
+                        <span class="value">{{vm.profile.officeName}}</span>
+                    </div>
+                    <div class="detail-item" layout="row">
+                        <span class="label">Legal Form:</span>
+                        <span class="value">{{vm.profile.legalForm.value}}</span>
+                    </div>
+                    <div class="detail-item" layout="row">
+                        <span class="label">Activation Date:</span>
+                        <span class="value">{{vm.formatDate(vm.profile.activationDate)}}</span>
+                    </div>
+                    <div class="detail-item" layout="row">
+                        <span class="label">Submitted On:</span>
+                        <span class="value">{{vm.formatDate(vm.profile.timeline.submittedOnDate)}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </md-card>
+</div> 
