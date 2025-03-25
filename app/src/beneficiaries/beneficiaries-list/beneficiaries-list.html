@@ -12,51 +12,69 @@
         </md-card-title>
         <md-divider></md-divider>
         <md-card-content class="md-padding">
-            <div flex layout="row" layout-align="center center" ng-if="vm.loadingBeneficiaries">
-                <md-progress-circular md-mode="indeterminate"></md-progress-circular>
-                {{ 'label.msg.loadingBeneficiaries' | translate }}...
-            </div>
-            <md-table-container>
-                <div>
-                    <table md-table>
-                        <thead md-head md-order="vm.query.orderBy">
-                        <tr md-row>
-                            <th md-column md-order-by="id">{{ 'label.heading.id' | translate }}</th>
-                            <th md-column md-order-by="accountNumber">{{ 'label.heading.accountNo' | translate }}</th>
-                            <th md-column md-order-by="accountType.value">{{ 'label.heading.accountType' | translate }}</th>
-                            <th md-column md-order-by="transferLimit">{{ 'label.heading.transferLimit' | translate }}</th>
-                            <th md-column md-order-by="name"><span>{{ 'label.heading.name' | translate }}</span></th>
-                            <th md-column md-order-by="officeName">{{ 'label.heading.officeName' | translate }}</th>
-                            <th md-column md-numeric md-order-by="clientName">{{ 'label.heading.clientName' | translate }}</th>
-                            <th md-column>{{ 'label.heading.actions' | translate }}</th>
-                        </tr>
-                        </thead>
-                        <tbody md-body>
-                        <tr md-row
-                            ng-repeat="beneficiary in vm.beneficiaries | filter: vm.beneficiariesFilter | orderBy: vm.query.orderBy">
-                            <td md-cell>{{ beneficiary.id }}</td>
-                            <td md-cell>{{ beneficiary.accountNumber }}</td>
-                            <td md-cell>{{ beneficiary.accountType.value }}</td>
-                            <td md-cell>{{ beneficiary.transferLimit }}</td>
-                            <td md-cell>{{ beneficiary.name }}</td>
-                            <td md-cell>{{ beneficiary.officeName }}</td>
-                            <td md-cell>{{ beneficiary.clientName }}</td>
-                            <td md-cell>
-                                <md-button ng-click="vm.goToEdit(beneficiary)">
-                                    <md-icon class="material-icons">edit</md-icon>
-                                </md-button>
-                                <md-button class="md-warn" ng-click="vm.deleteConfirm($event, beneficiary)">
-                                    <md-icon class="material-icons">delete</md-icon>
-                                </md-button>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+            <div class="beneficiaries-container">
+                <md-progress-circular md-mode="indeterminate" ng-if="vm.loadingBeneficiaries"></md-progress-circular>
+
+                <div class="error-state" ng-if="vm.hasError">
+                    <div class="error-message">
+                        <h3>Unable to load beneficiaries</h3>
+                        <p>There was a problem loading your beneficiaries.</p>
+                        <md-button class="md-raised md-primary reload-button" ng-click="vm.reload()">
+                            Try Again
+                        </md-button>
+                    </div>
                 </div>
-            </md-table-container>
-            <md-table-pagination md-limit="vm.query.limit" md-page="vm.page"
-                                 md-total="{{vm.beneficiaries.length}}"
-                                 md-page-select></md-table-pagination>
+
+                <div ng-if="!vm.loadingBeneficiaries && !vm.hasError">
+                    <div flex layout="row" layout-align="center center" ng-if="!vm.beneficiaries.length">
+                        <md-button class="md-primary" ng-click="vm.getBeneficiaries()">
+                            <md-icon class="material-icons">refresh</md-icon>
+                            {{ 'label.button.retry' | translate }}
+                        </md-button>
+                    </div>
+                    <md-table-container>
+                        <div>
+                            <table md-table>
+                                <thead md-head md-order="vm.query.orderBy">
+                                <tr md-row>
+                                    <th md-column md-order-by="id">{{ 'label.heading.id' | translate }}</th>
+                                    <th md-column md-order-by="accountNumber">{{ 'label.heading.accountNo' | translate }}</th>
+                                    <th md-column md-order-by="accountType.value">{{ 'label.heading.accountType' | translate }}</th>
+                                    <th md-column md-order-by="transferLimit">{{ 'label.heading.transferLimit' | translate }}</th>
+                                    <th md-column md-order-by="name"><span>{{ 'label.heading.name' | translate }}</span></th>
+                                    <th md-column md-order-by="officeName">{{ 'label.heading.officeName' | translate }}</th>
+                                    <th md-column md-numeric md-order-by="clientName">{{ 'label.heading.clientName' | translate }}</th>
+                                    <th md-column>{{ 'label.heading.actions' | translate }}</th>
+                                </tr>
+                                </thead>
+                                <tbody md-body>
+                                <tr md-row
+                                    ng-repeat="beneficiary in vm.beneficiaries | filter: vm.beneficiariesFilter | orderBy: vm.query.orderBy">
+                                    <td md-cell>{{ beneficiary.id }}</td>
+                                    <td md-cell>{{ beneficiary.accountNumber }}</td>
+                                    <td md-cell>{{ beneficiary.accountType.value }}</td>
+                                    <td md-cell>{{ beneficiary.transferLimit }}</td>
+                                    <td md-cell>{{ beneficiary.name }}</td>
+                                    <td md-cell>{{ beneficiary.officeName }}</td>
+                                    <td md-cell>{{ beneficiary.clientName }}</td>
+                                    <td md-cell>
+                                        <md-button ng-click="vm.goToEdit(beneficiary)">
+                                            <md-icon class="material-icons">edit</md-icon>
+                                        </md-button>
+                                        <md-button class="md-warn" ng-click="vm.deleteConfirm($event, beneficiary)">
+                                            <md-icon class="material-icons">delete</md-icon>
+                                        </md-button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </md-table-container>
+                    <md-table-pagination md-limit="vm.query.limit" md-page="vm.page"
+                                         md-total="{{vm.beneficiaries.length}}"
+                                         md-page-select></md-table-pagination>
+                </div>
+            </div>
         </md-card-content>
     </md-card>
 </div>

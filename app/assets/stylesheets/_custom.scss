@@ -280,6 +280,39 @@ md-toolbar .md-menu {
   }
 }
 
+.datatable-cont.md-primary {
+  md-tabs-wrapper {
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #e0e0e0;
+    
+    md-tabs-canvas {
+      md-pagination-wrapper {
+        md-tab-item {
+          color: #666666;
+          font-weight: 500;
+          
+          &.md-active {
+            color: #6E9B05;
+          }
+          
+          &:not(.md-active):hover {
+            color: #333333;
+          }
+        }
+      }
+    }
+    
+    md-ink-bar {
+      background-color: #6E9B05;
+    }
+  }
+}
+
+md-card {
+  margin: 8px;
+  background-color: #ffffff;
+}
+
 
 // Status colors
 .statusoverpaid {
@@ -884,5 +917,49 @@ md-toolbar .md-menu {
       margin-bottom: 0;
     }
   }
+}
+
+.beneficiaries-container {
+    position: relative;
+    min-height: 200px;
+
+    .error-state {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 200px;
+        width: 100%;
+        
+        .error-message {
+            text-align: center;
+            
+            h3 {
+                colour: #333;
+                margin-bottom: 8px;
+            }
+            
+            p {
+                colour: #666;
+                margin-bottom: 24px;
+            }
+            
+            .reload-button {
+                min-width: 120px;
+                background-colour: #1976d2;
+                colour: white;
+                
+                &:hover {
+                    background-colour: #1565c0;
+                }
+            }
+        }
+    }
+
+    md-progress-circular {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
 } 
 

@@ -8,6 +8,7 @@
 
         var vm = this;
         vm.loadingBeneficiaries = true;
+        vm.hasError = false;
         vm.beneficiaries = [];
         vm.beneficiariesFilter = "";
         vm.page = 1;
@@ -16,15 +17,29 @@
             offset: 0
         }
 
-        vm.getBeneficiaries = getBeneficiaries();
+        vm.getBeneficiaries = getBeneficiaries;
         vm.addBeneficiary = addBeneficiary;
         vm.goToEdit = goToEdit;
         vm.deleteConfirm = deleteConfirm;
+        vm.reload = getBeneficiaries;
+
+        getBeneficiaries();
 
         function getBeneficiaries() {
+            vm.loadingBeneficiaries = true;
+            vm.hasError = false;
             BeneficiariesService.getBeneficiaries().query().$promise.then(function(data) {
                 vm.beneficiaries = data;
                 vm.loadingBeneficiaries = false;
+            }).catch(function(error) {
+                vm.loadingBeneficiaries = false;
+                vm.hasError = true;
+                $mdToast.show(
+                    $mdToast.simple()
+                        .textContent('Error loading beneficiaries')
+                        .position('top right')
+                        .toastClass('md-error')
+                );
             });
         }
 
