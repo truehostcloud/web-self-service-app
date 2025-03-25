@@ -33,19 +33,19 @@
                 <table md-table ng-model="vm.selected" md-progress="vm.promise">
                     <thead md-head md-order="vm.query.orderBy">
                         <tr md-row>
-                            <th md-column md-order-by="name">Survey</th>
-                            <th md-column md-order-by="createdBy">Created By</th>
-                            <th md-column md-order-by="dateTime">DateTime</th>
-                            <th md-column md-numeric md-order-by="score">Score</th>
+                            <th md-column md-order-by="surveyName" style="text-align: center"   >Survey Name</th>
+                            <th md-column md-order-by="username" style="text-align: center">Created By</th>
+                            <th md-column md-order-by="scorecardValues[0].createdOn" style="text-align: center">Date/Time</th>
+                            <th md-column md-numeric md-order-by="scorecardValues[0].value" style="text-align: center">Score</th>
                         </tr>
                     </thead>
                     <tbody md-body>
-                        <tr md-row md-select="survey" md-select-id="{{survey.name}}" md-auto-select
+                        <tr md-row md-select="survey" md-select-id="{{survey.id}}" md-auto-select
                             ng-repeat="survey in vm.surveys | filter: vm.surveyFilter | orderBy: vm.query.orderBy | limitTo: vm.query.limit : (vm.query.offset - 1) * vm.query.limit">
-                            <td md-cell>{{survey.name}}</td>
-                            <td md-cell>{{survey.createdBy}}</td>
-                            <td md-cell>{{survey.dateTime | date:'medium'}}</td>
-                            <td md-cell>{{survey.score}}</td>
+                            <td md-cell style="text-align: center">{{survey.surveyName}}</td>
+                            <td md-cell style="text-align: center">{{survey.username}}</td>
+                            <td md-cell style="text-align: center">{{survey.scorecardValues[0].createdOn | date:'medium'}}</td>
+                            <td md-cell style="text-align: center">{{survey.scorecardValues[0].value}}</td>
                         </tr>
                     </tbody>
                 </table>
