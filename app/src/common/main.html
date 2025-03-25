@@ -133,12 +133,13 @@
             </md-button>
             <md-menu-content width="3">
                 <md-menu-item>
-                    <md-button ng-click="vm.selectItem('Profile');" ui-sref=".profile">
+                    <md-button ng-click="vm.goToProfile($mdMenu)">
                         <div layout="row">
                             <p flex>Profile</p>
                         </div>
                     </md-button>
                 </md-menu-item>
+                
                 <md-menu-item>
                     <md-button ng-click="vm.logout();">
                         <div layout="row">
