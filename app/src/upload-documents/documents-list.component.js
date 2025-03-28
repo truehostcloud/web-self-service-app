@@ -20,7 +20,6 @@
         function init() {
             AccountService.getClientId().then(function(clientId) {
                 vm.clientId = clientId;
-                console.log(vm.clientId);
                 loadDocuments();
             });
         }
@@ -28,7 +27,6 @@
         function loadDocuments() {
             UploadDocumentsService.getDocuments(vm.clientId).get().$promise
                 .then(function(response) {
-                    console.log(response);
                     vm.documents = response;
                     if (!Array.isArray(vm.documents)) {
                         vm.documents = [vm.documents];

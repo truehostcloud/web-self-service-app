@@ -14,15 +14,9 @@
                     headers: {'Content-Type': undefined},
                     transformRequest: function(data) {
                         const formData = new FormData();
-                        console.log("DATA", data);
                         formData.append('file', data.file);
                         formData.append('name', data.name);
                         formData.append('description', data.description || '');
-                        console.log("FORM DATA", {
-                            file: data.file,
-                            name: data.name,
-                            description: data.description
-                        });
                         return formData;
                     }
                 }

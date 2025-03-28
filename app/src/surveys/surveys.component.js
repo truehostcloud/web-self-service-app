@@ -41,7 +41,6 @@
             SurveysService.getClientSurveys(clientId).then(function(response) {
                 vm.surveys = response.data;
                 vm.loadingSurveys = false;
-                console.log(vm.surveys);
             }).catch(function(error) {
                 vm.loadingSurveys = false;
                 vm.loadingError = true;
