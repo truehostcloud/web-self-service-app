@@ -28,11 +28,9 @@ md-toast {
     }
 
     .md-toast-content {
-        height: 36px !important;
         line-height: 36px !important;
         padding: 0 16px !important;
         min-width: 250px;
-        max-width: 350px;
         box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         border-radius: 4px;
     }
