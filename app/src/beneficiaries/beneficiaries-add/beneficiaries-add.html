@@ -8,20 +8,53 @@
         <md-divider></md-divider>
         <md-card-content>
             <form name="addBeneficiaryForm" ng-submit="addBeneficiaryForm.$valid && vm.submit()">
-                <api-validate></api-validate>
+                <div class="form-errors" ng-if="vm.formError">
+                    <div class="error-message">
+                         {{ vm.formError }}
+                    </div>
+                </div>
+                <div class="validation-errors" ng-messages="addBeneficiaryForm.$error" role="alert">
+                    <div ng-message="required" class="md-caption error-message">
+                        Please fill in all required fields
+                    </div>
+                </div>
                 <md-input-container class="md-block md-icon-float">
                     <label>{{ 'label.input.accountType' | translate }}</label>
-                    <md-select ng-model="vm.addBeneficiaryFormData.accountType" required>
+                    <md-select ng-model="vm.addBeneficiaryFormData.accountType" required ng-change="vm.onAccountTypeChange()">
                         <md-option ng-repeat="accountType in vm.accountTypeOptions" ng-value="accountType.id">{{ accountType.value }}</md-option>
                     </md-select>
                 </md-input-container>
+
+                <md-input-container class="md-block" ng-if="vm.addBeneficiaryFormData.accountType">
+                    <label>Select Account</label>
+                    <md-select ng-model="vm.selectedAccount" required ng-change="vm.onAccountSelect()">
+                        <md-option ng-if="!vm.hasAccounts(vm.addBeneficiaryFormData.accountType)" disabled>
+                            No {{ vm.addBeneficiaryFormData.accountType === 1 ? 'loan' : 'savings' }} accounts available
+                        </md-option>
+                        <md-option ng-if="vm.hasAccounts(vm.addBeneficiaryFormData.accountType)"
+                                  ng-repeat="account in vm.addBeneficiaryFormData.accountType === 1 ? vm.loanAccounts : vm.savingsAccounts" 
+                                  ng-value="account">
+                            {{ account.productName }} - {{ account.accountNo }}
+                            <small ng-if="account.status.value">({{ account.status.value }})</small>
+                        </md-option>
+                    </md-select>
+                    <div class="md-caption" style="color: rgba(0,0,0,0.6);" ng-if="!vm.hasAccounts(vm.addBeneficiaryFormData.accountType)">
+                        You don't have any {{ vm.addBeneficiaryFormData.accountType === 1 ? 'loan' : 'savings' }} accounts. Please create an account first before adding it as a beneficiary.
+                    </div>
+                </md-input-container>
+
                 <md-input-container class="md-block">
                     <label>{{ 'label.input.accountNumber' | translate }}</label>
-                    <input name="accountNumber" ng-model="vm.addBeneficiaryFormData.accountNumber" required>
+                    <input name="accountNumber" ng-model="vm.addBeneficiaryFormData.accountNumber" required readonly>
+                    <div class="md-caption" style="color: rgba(0,0,0,0.6);">Account number will be automatically filled based on your selection above</div>
                 </md-input-container>
                 <md-input-container class="md-block">
                     <label>{{ 'label.input.officeName' | translate }}</label>
-                    <input name="officeName" ng-model="vm.addBeneficiaryFormData.officeName" required>
+                    <md-select name="officeName" ng-model="vm.addBeneficiaryFormData.officeName" required>
+                        <md-option ng-repeat="office in vm.offices" ng-value="office.name">
+                            {{ office.nameDecorated }}
+                        </md-option>
+                    </md-select>
                 </md-input-container>
                 <md-input-container class="md-block">
                     <label>{{ 'label.input.transferLimit' | translate }}</label>
