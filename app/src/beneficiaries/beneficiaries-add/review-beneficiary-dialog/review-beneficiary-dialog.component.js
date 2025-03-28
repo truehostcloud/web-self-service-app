@@ -32,22 +32,16 @@
 						$mdToast.simple()
 							.textContent('Beneficiary Added Successfully')
 							.position('top right')
+							.hideDelay(3000)
+							.toastClass('md-success')
 					);
-					vm.clearForm();
+					$state.go('app.beneficiarieslist');
 			}, function (resp) {
-				var errors = '';
-				if (resp.data) {
-					errors = resp.data.errors.map(function (data) {
-						return data.defaultUserMessage;
-					});
-					errors.join(' ');
+				var errorMessage = 'An error occurred while adding the beneficiary';
+				if (resp.data && resp.data.errors && resp.data.errors.length > 0) {
+					errorMessage = resp.data.errors[0].defaultUserMessage || 'The account details provided do not match our records. Please verify the office name and account number.';
 				}
-				$mdToast.show(
-					$mdToast.simple()
-						.textContent('Error in Adding Beneficiary: ' + errors)
-						.position('top right')
-				);
-				$mdDialog.hide("error");
+				$mdDialog.hide({error: errorMessage});
 			});
 		}
 	}
