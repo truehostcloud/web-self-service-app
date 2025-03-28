@@ -41,7 +41,14 @@
 				if (resp.data && resp.data.errors && resp.data.errors.length > 0) {
 					errorMessage = resp.data.errors[0].defaultUserMessage || 'The account details provided do not match our records. Please verify the office name and account number.';
 				}
-				$mdDialog.hide({error: errorMessage});
+				$mdToast.show(
+					$mdToast.simple()
+						.textContent(errorMessage)
+						.position('top right')
+						.hideDelay(3000)
+						.toastClass('md-error')
+				);
+				$mdDialog.hide("error");
 			});
 		}
 	}
