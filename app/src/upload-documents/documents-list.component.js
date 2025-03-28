@@ -49,6 +49,8 @@
                 return doc.id === documentId;
             });
             const filename = docInfo ? docInfo.fileName : 'document';
+            let url;
+            let a;
             
             UploadDocumentsService.downloadDocument().get({ 
                 clientId: vm.clientId,
@@ -56,14 +58,12 @@
             }).$promise
                 .then(function(response) {
                     const blob = new Blob([response.data], { type: 'application/octet-stream' });
-                    const url = window.URL.createObjectURL(blob);
-                    const a = document.createElement('a');
+                    url = window.URL.createObjectURL(blob);
+                    a = document.createElement('a');
                     a.href = url;
                     a.download = filename;
                     document.body.appendChild(a);
                     a.click();
-                    document.body.removeChild(a);
-                    window.URL.revokeObjectURL(url);
                 })
                 .catch(function(err) {
                     $mdToast.show(
@@ -75,6 +75,12 @@
                     );
                 })
                 .finally(function() {
+                    if (a && document.body.contains(a)) {
+                        document.body.removeChild(a);
+                    }
+                    if (url) {
+                        window.URL.revokeObjectURL(url);
+                    }
                     vm.downloading[documentId] = false;
                 });
         }
