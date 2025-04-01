@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('selfService')
-        .controller('RegisterCtrl', ['$scope', '$state', '$mdToast', 'AuthService', '$location',  RegisterCtrl]);
+        .controller('RegisterCtrl', ['$scope', '$state', '$mdToast', 'AuthService', '$location', RegisterCtrl]);
 
     /**
      * @module RegisterCtrl
@@ -14,28 +14,56 @@
         vm.clearForm = clearForm;
         vm.formErrors = [];
 
-        vm.form={
-            "authenticationMode" :"email"
+        vm.form = {
+            authenticationMode: "email",
+            accountNumber: '',
+            username: '',
+            firstName: '',
+            lastName: '',
+            email: '',
+            mobileNumber: '',
+            password: '',
+            passwordConfirm: ''
         };
 
         function clearForm() {
             $scope.form.$setPristine();
             $scope.form.$setUntouched();
             vm.form = {
-                "authenticationMode" :"email"
+                authenticationMode: "email",
+                accountNumber: '',
+                username: '',
+                firstName: '',
+                lastName: '',
+                email: '',
+                mobileNumber: '',
+                password: '',
+                passwordConfirm: ''
             };
             vm.formErrors = [];
         }
 
+        vm.validatePasswords = function() {
+            if (vm.form.password && vm.form.passwordConfirm) {
+                $scope.registerForm.passwordConfirm.$setValidity('compareTo', 
+                    vm.form.password === vm.form.passwordConfirm);
+            }
+        };
+
         $scope.submit = function() {
-            vm.formErrors = [];
+            if (vm.form.password !== vm.form.passwordConfirm) {
+                vm.formErrors = ['Passwords do not match'];
+                return;
+            }
+
             AuthService.register(vm.form).then(function () {
                 $mdToast.show(
                     $mdToast.simple()
-                        .textContent('Confirmation email is sent')
+                        .textContent('Registration successful! Please check your email for verification instructions.')
                         .position('top right')
                         .toastClass('md-success')
                 );
+                $state.go('login');
                 vm.clearForm();
             }, function (resp) {
                 if(resp.data && resp.data.errors){
@@ -52,11 +80,11 @@
                 } else {
                     $mdToast.show(
                         $mdToast.simple()
-                            .textContent('Confirmation email is sent')
+                            .textContent('Registration successful! Please check your email for verification instructions.')
                             .position('top right')
                             .toastClass('md-success')
                     );
-                    $location.path('/verify');
+                    $state.go('login');
                     vm.clearForm();
                 }
             });
