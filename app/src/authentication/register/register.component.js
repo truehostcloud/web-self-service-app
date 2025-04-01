@@ -56,7 +56,18 @@
                 return;
             }
 
-            AuthService.register(vm.form).then(function () {
+            var registrationPayload = {
+                authenticationMode: vm.form.authenticationMode,
+                accountNumber: vm.form.accountNumber,
+                username: vm.form.username,
+                firstName: vm.form.firstName,
+                lastName: vm.form.lastName,
+                email: vm.form.email,
+                mobileNumber: vm.form.mobileNumber,
+                password: vm.form.password
+            };
+
+            AuthService.register(registrationPayload).then(function () {
                 $mdToast.show(
                     $mdToast.simple()
                         .textContent('Registration successful! Please check your email for verification instructions.')
