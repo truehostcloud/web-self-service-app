@@ -14,7 +14,7 @@
             <form name="verificationForm" novalidate ng-submit="submit()">
                 <md-input-container class="md-block" md-no-float>
                     <input name="requestId" ng-model="vm.verifyData.requestId" placeholder="RequestID"
-                           required>
+                           required autocomplete="off">
                     <div ng-messages="verificationForm.requestId.$error" role="alert">
                         <div ng-message="required">
                             <span>RequestID is required</span>
@@ -23,7 +23,7 @@
                 </md-input-container>
                 <md-input-container class="md-block" md-no-float>
                     <input name="authenticationToken" ng-model="vm.verifyData.authenticationToken" placeholder="Authentication Token"
-                           required>
+                           required autocomplete="off">
                     <div ng-messages="verificationForm.authenticationToken.$error" role="alert">
                         <div ng-message="required">
                             <span>Authentication Token is required</span>

@@ -16,7 +16,7 @@
                 <div ng-if="!vm.showResetForm">
                     <md-input-container class="md-block" md-no-float>
                         <input type="email" name="email" ng-model="vm.form.email" placeholder="Email address"
-                               ng-pattern="/^.+@.+\..+$/" required>
+                               ng-pattern="/^.+@.+\..+$/" required autocomplete="off">
                         <div ng-messages="forgotPasswordForm.email.$error" role="alert" multiple>
                             <div ng-message="required">
                                 <span>Email field is required</span>
@@ -36,7 +36,7 @@
 
                 <div ng-if="vm.showResetForm" class="reset-form">
                     <md-input-container class="md-block" md-no-float>
-                        <input type="text" name="token" ng-model="vm.form.token" placeholder="Reset token" required>
+                        <input type="text" name="token" ng-model="vm.form.token" placeholder="Reset token" required autocomplete="off">
                         <div ng-messages="forgotPasswordForm.token.$error" role="alert">
                             <div ng-message="required">
                                 <span>Reset token is required</span>
@@ -46,7 +46,7 @@
 
                     <md-input-container class="md-block" md-no-float>
                         <input type="password" name="newPassword" ng-model="vm.form.newPassword" 
-                               placeholder="New password" required>
+                               placeholder="New password" required autocomplete="new-password">
                         <div ng-messages="forgotPasswordForm.newPassword.$error" role="alert">
                             <div ng-message="required">
                                 <span>New password is required</span>
@@ -66,7 +66,7 @@
                     <md-input-container class="md-block" md-no-float>
                         <input type="password" name="confirmPassword" ng-model="vm.form.confirmPassword" 
                                placeholder="Confirm new password" required
-                               ng-change="vm.validatePasswords()">
+                               ng-change="vm.validatePasswords()" autocomplete="new-password">
                         <div ng-messages="forgotPasswordForm.confirmPassword.$error" role="alert">
                             <div ng-message="required">
                                 <span>Please confirm your new password</span>
