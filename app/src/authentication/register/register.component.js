@@ -74,7 +74,7 @@
                         .position('top right')
                         .toastClass('md-success')
                 );
-                $state.go('login');
+                $state.go('verify');
                 vm.clearForm();
             }, function (resp) {
                 if(resp.data && resp.data.errors){
@@ -95,7 +95,7 @@
                             .position('top right')
                             .toastClass('md-success')
                     );
-                    $state.go('login');
+                    $state.go('verify');
                     vm.clearForm();
                 }
             });
