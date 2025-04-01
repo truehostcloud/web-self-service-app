@@ -78,16 +78,29 @@
                         <div ng-message="required">
                             <span>Password field is required</span>
                         </div>
+                        <div ng-message="passwordStrength">
+                            <span>Password does not meet requirements</span>
+                        </div>
                     </div>
                 </md-input-container>
 
+                <password-requirements 
+                    form="registerForm"
+                    model="vm.form.password"
+                    field-name="password">
+                </password-requirements>
+
                 <md-input-container class="md-block" md-no-float>
-                    <input type="password" name="passwordConfirm" ng-model="passwordConfirm"
+                    <input type="password" name="passwordConfirm" ng-model="vm.form.passwordConfirm"
                            placeholder="Password (Confirm)"
+                           ng-change="vm.validatePasswords()"
                            required>
                     <div ng-messages="registerForm.passwordConfirm.$error" role="alert">
                         <div ng-message="required">
                             <span>Password (Confirm) field is required</span>
+                        </div>
+                        <div ng-message="compareTo">
+                            <span>Passwords must match</span>
                         </div>
                     </div>
                 </md-input-container>
