@@ -85,6 +85,7 @@
                     $mdToast.simple()
                         .textContent('Passwords do not match')
                         .position('top right')
+                        .toastClass('md-error')
                         .hideDelay(3000)
                 );
                 return;
@@ -95,6 +96,7 @@
                     $mdToast.simple()
                         .textContent('Password has been reset successfully')
                         .position('top right')
+                        .toastClass('md-success')
                         .hideDelay(3000)
                 );
                 $state.go('login');
@@ -103,6 +105,7 @@
                     $mdToast.simple()
                         .textContent('Failed to reset password. Please try again.')
                         .position('top right')
+                        .toastClass('md-error')
                         .hideDelay(3000)
                 );
             });
