@@ -257,6 +257,12 @@
                     controller: 'TakeSurveyCtrl',
                     controllerAs: 'vm'
                 })
+                .state('app.editSurvey', {
+                    url: '/surveys/edit-survey/:surveyId',
+                    templateUrl: 'src/surveys/edit-survey/edit-survey.html',
+                    controller: 'EditSurveyCtrl',
+                    controllerAs: 'vm'
+                })
                 .state('app.profile', {
                     url: '/profile',
                     templateUrl: 'src/common/profile/profile.html',
