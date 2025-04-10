@@ -64,7 +64,6 @@
             }).catch(function(error) {
                 vm.loadingSurveys = false;
                 vm.loadingError = true;
-                console.error('Error loading surveys:', error);
                 $mdToast.show(
                     $mdToast.simple()
                         .textContent('Failed to load surveys. Please try again.')
@@ -142,7 +141,6 @@
                     $state.go('app.surveys');
                 })
                 .catch(function(error) {
-                    console.error('Error submitting survey:', error);
                     if (error.data && error.data.errors && error.data.errors[0] && 
                         error.data.errors[0].userMessageGlobalisationCode === 'error.msg.survey.already.submitted') {
                         showEditDialog();
@@ -222,7 +220,6 @@
                     }
                 })
                 .catch(function(error) {
-                    console.error('Error loading existing responses:', error);
                     $mdToast.show(
                         $mdToast.simple()
                             .textContent('Failed to load existing responses. Please try again.')
