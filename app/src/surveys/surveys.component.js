@@ -2,9 +2,9 @@
     'use strict';
     
     angular.module('selfService')
-        .controller('SurveysCtrl', ['$scope','$mdToast', 'AccountService' ,'SurveysService', SurveysCtrl]);
+        .controller('SurveysCtrl', ['$scope','$mdToast', '$state', 'AccountService' ,'SurveysService', SurveysCtrl]);
 
-    function SurveysCtrl($scope, $mdToast, AccountService, SurveysService) {
+    function SurveysCtrl($scope, $mdToast, $state, AccountService, SurveysService) {
         var vm = this;
         vm.clientId = null;
         vm.loadingSurveys = false;
@@ -23,6 +23,7 @@
         vm.retryLoading = loadSurveys;
         vm.init = init;
         vm.getClientSurveys = getClientSurveys;
+        vm.editSurvey = editSurvey;
 
         function loadSurveys() {
             vm.loadingSurveys = true;
@@ -38,7 +39,7 @@
         }
 
         function getClientSurveys(clientId) {
-            SurveysService.getClientSurveys(clientId).then(function(response) {
+            SurveysService.getLatestClientSurveySubmissions(clientId).then(function(response) {
                 vm.surveys = response.data;
                 vm.loadingSurveys = false;
             }).catch(function(error) {
@@ -55,7 +56,13 @@
         }
         
         function takeSurvey() {
-            // Implement survey taking logic
+            $state.go('app.takeSurvey');
+        }
+
+        function editSurvey(survey) {
+            $state.go('app.editSurvey', { 
+                surveyId: survey.surveyId
+            });
         }
         
         loadSurveys();
