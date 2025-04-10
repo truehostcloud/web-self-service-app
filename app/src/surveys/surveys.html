@@ -2,9 +2,9 @@
     <md-card>
         <md-card-title layout-xs="column">
             <md-card-title-text flex-xs>
-                <span class="md-headline">Surveys</span>
+                <span class="md-headline">My Survey Submissions</span>
             </md-card-title-text>
-            <md-button class="md-raised" style="background-color: #6E9B05; color: white;" ui-sref="app.takeSurvey">
+            <md-button class="md-raised" style="background-color: #6E9B05; color: white;" ng-click="vm.takeSurvey()">
                 <md-icon class="material-icons">list_alt</md-icon>
                 Take Survey
             </md-button>
@@ -18,11 +18,11 @@
 
             <div flex layout="row" layout-align="center center" ng-if="vm.loadingSurveys">
                 <md-progress-circular md-mode="indeterminate"></md-progress-circular>
-                <span class="md-padding">Loading Surveys...</span>
+                <span class="md-padding">Loading Survey Submissions...</span>
             </div>
 
             <div flex layout="column" layout-align="center center" ng-if="vm.loadingError">
-                <p class="md-body-1">Failed to load surveys. Please try again.</p>
+                <p class="md-body-1">Failed to load survey submissions. Please try again.</p>
                 <md-button class="md-primary" ng-click="vm.retryLoading()">
                     <md-icon class="material-icons">refresh</md-icon>
                     Retry
@@ -33,10 +33,11 @@
                 <table md-table ng-model="vm.selected" md-progress="vm.promise">
                     <thead md-head md-order="vm.query.orderBy">
                         <tr md-row>
-                            <th md-column md-order-by="surveyName" style="text-align: center"   >Survey Name</th>
-                            <th md-column md-order-by="username" style="text-align: center">Created By</th>
-                            <th md-column md-order-by="scorecardValues[0].createdOn" style="text-align: center">Date/Time</th>
+                            <th md-column md-order-by="surveyName" style="text-align: center">Survey Name</th>
+                            <th md-column md-order-by="username" style="text-align: center">Submitted By</th>
+                            <th md-column md-order-by="scorecardValues[0].createdOn" style="text-align: center">Submission Date</th>
                             <th md-column md-numeric md-order-by="scorecardValues[0].value" style="text-align: center">Score</th>
+                            <th md-column style="text-align: center">Actions</th>
                         </tr>
                     </thead>
                     <tbody md-body>
@@ -46,6 +47,11 @@
                             <td md-cell style="text-align: center">{{survey.username}}</td>
                             <td md-cell style="text-align: center">{{survey.scorecardValues[0].createdOn | date:'medium'}}</td>
                             <td md-cell style="text-align: center">{{survey.scorecardValues[0].value}}</td>
+                            <td md-cell style="text-align: center">
+                                <md-button class="md-icon-button" ng-click="vm.editSurvey(survey)" aria-label="Edit Survey" ng-if="survey.scorecardValues && survey.scorecardValues.length > 0">
+                                    <md-icon class="material-icons">edit</md-icon>
+                                </md-button>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
