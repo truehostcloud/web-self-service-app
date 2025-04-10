@@ -1,0 +1,65 @@
+<div class="md-padding">
+    <md-card>
+        <md-card-title>
+            <md-card-title-text>
+                <span class="md-headline">Edit Survey</span>
+            </md-card-title-text>
+        </md-card-title>
+        <md-divider></md-divider>
+
+        <md-card-content class="md-padding">
+            <div flex layout="row" layout-align="center center" ng-if="vm.loadingSurveys">
+                <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                <span class="md-padding">Loading Survey Responses...</span>
+            </div>
+
+            <div flex layout="column" layout-align="center center" ng-if="vm.loadingError">
+                <p class="md-body-1">Failed to load survey responses. Please try again.</p>
+                <md-button class="md-primary" ng-click="vm.retryLoading()">
+                    <md-icon class="material-icons">refresh</md-icon>
+                    Retry
+                </md-button>
+            </div>
+
+            <div ng-if="!vm.loadingSurveys && !vm.loadingError">
+                <div class="md-padding">
+                    <h2 class="md-title">{{vm.surveyData.name}}</h2>
+                </div>
+
+                <div ng-if="vm.componentGroups.length" class="survey-questions md-padding">
+                    <div ng-repeat="component in vm.componentGroups" class="component-group">
+                        <h2 class="md-title" ng-if="component[0].componentKey">{{component[0].componentKey}}</h2>
+                        
+                        <div ng-repeat="question in component" class="survey-question md-padding">
+                            <p class="md-subhead question-text" style="margin-bottom: 8px;">{{question.text}}</p>
+                            <md-radio-group ng-model="question.selectedResponseId" class="md-primary radio-group">
+                                <md-radio-button ng-repeat="option in question.responseDatas" 
+                                               ng-value="option.id"
+                                               ng-checked="option.id === question.answer.id"
+                                               class="md-accent">
+                                    {{option.text}}
+                                </md-radio-button>
+                            </md-radio-group>
+                            <p ng-if="question.answer" class="selected-answer" style="margin-top: 8px; color: #6E9B05;">
+                                Your answer is: {{question.answer.text}}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div layout="row" layout-align="end center" class="md-padding">
+                        <md-button class="md-raised" ng-click="vm.cancel()" ng-disabled="vm.submitting">
+                            Cancel
+                        </md-button>
+                        <md-button class="md-raised" 
+                                 style="background-color: #6E9B05; color: white;" 
+                                 ng-click="vm.submitSurvey()"
+                                 ng-disabled="vm.submitting">
+                            <md-icon class="material-icons">check</md-icon>
+                            {{vm.submitting ? 'Updating...' : 'Update Responses'}}
+                        </md-button>
+                    </div>
+                </div>
+            </div>
+        </md-card-content>
+    </md-card>
+</div> 
