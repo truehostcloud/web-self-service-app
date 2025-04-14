@@ -22,7 +22,7 @@
         this.getLatestClientSurveySubmissions = function(clientId) {
             return $http({
                 method: 'GET',
-                url: BASE_URL + '/self/surveys/scorecards/clients/' + clientId + '/latest'
+                url: BASE_URL + '/self/surveys/scorecards/clients/' + clientId + '/surveys'
             });
         };
 
