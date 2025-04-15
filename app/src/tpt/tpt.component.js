@@ -58,6 +58,7 @@
                     $mdToast.simple()
                         .textContent('Transfer Cancelled')
                         .position('top right')
+                        .toastClass('md-error')
                 );
             });
         }

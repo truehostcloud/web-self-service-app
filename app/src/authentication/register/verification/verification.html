@@ -7,10 +7,14 @@
 
             <div class="title">Verification</div>
 
+            <div style="text-align: center; padding: 16px; background-color: #e8f4fd; margin-bottom: 16px; border-radius: 4px; border-left: 4px solid #2196F3; color: #0d47a1; font-weight: 500;">
+                Please check your email for the Request ID and Authentication Token. If you haven't received the email, please check your spam folder.
+            </div>
+
             <form name="verificationForm" novalidate ng-submit="submit()">
                 <md-input-container class="md-block" md-no-float>
                     <input name="requestId" ng-model="vm.verifyData.requestId" placeholder="RequestID"
-                           required>
+                           required autocomplete="off">
                     <div ng-messages="verificationForm.requestId.$error" role="alert">
                         <div ng-message="required">
                             <span>RequestID is required</span>
@@ -19,7 +23,7 @@
                 </md-input-container>
                 <md-input-container class="md-block" md-no-float>
                     <input name="authenticationToken" ng-model="vm.verifyData.authenticationToken" placeholder="Authentication Token"
-                           required>
+                           required autocomplete="off">
                     <div ng-messages="verificationForm.authenticationToken.$error" role="alert">
                         <div ng-message="required">
                             <span>Authentication Token is required</span>

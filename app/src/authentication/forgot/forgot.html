@@ -7,24 +7,82 @@
 
             <div class="title">Recover your password</div>
 
-            <form name="forgotPasswordForm" novalidate>
-                <md-input-container class="md-block" md-no-float>
-                    <input type="email" name="email" ng-model="vm.form.email" placeholder="Email address"
-                           ng-pattern="/^.+@.+\..+$/" required>
-                    <div ng-messages="forgotPasswordForm.email.$error" role="alert" multiple>
-                        <div ng-message="required">
-                            <span>Email field is required</span>
-                        </div>
-                        <div ng-message="pattern">
-                            <span>Email must be a valid e-mail address</span>
-                        </div>
-                    </div>
-                </md-input-container>
+            <div class="info-banner md-accent-bg">
+                <i class="material-icons">info</i>
+                <span>Password reset is only available for registered accounts. If the email exists in our system, you will receive a reset token.</span>
+            </div>
 
-                <md-button type="submit" class="md-raised md-accent submit-button" aria-label="RESET MY PASSWORD"
-                           ng-disabled="forgotPasswordForm.$invalid || forgotPasswordForm.$pristine">
-                    SEND RESET LINK
-                </md-button>
+            <form name="forgotPasswordForm">
+                <div ng-if="!vm.showResetForm">
+                    <md-input-container class="md-block" md-no-float>
+                        <input type="email" name="email" ng-model="vm.form.email" placeholder="Email address"
+                               ng-pattern="/^.+@.+\..+$/" required autocomplete="off">
+                        <div ng-messages="forgotPasswordForm.email.$error" role="alert" multiple>
+                            <div ng-message="required">
+                                <span>Email field is required</span>
+                            </div>
+                            <div ng-message="pattern">
+                                <span>Email must be a valid e-mail address</span>
+                            </div>
+                        </div>
+                    </md-input-container>
+
+                    <md-button type="submit" class="md-raised md-accent submit-button" aria-label="RESET MY PASSWORD"
+                               ng-click="vm.submitResetRequest()"
+                               ng-disabled="forgotPasswordForm.$invalid || forgotPasswordForm.$pristine">
+                        SEND RESET LINK
+                    </md-button>
+                </div>
+
+                <div ng-if="vm.showResetForm" class="reset-form">
+                    <md-input-container class="md-block" md-no-float>
+                        <input type="text" name="token" ng-model="vm.form.token" placeholder="Reset token" required autocomplete="off">
+                        <div ng-messages="forgotPasswordForm.token.$error" role="alert">
+                            <div ng-message="required">
+                                <span>Reset token is required</span>
+                            </div>
+                        </div>
+                    </md-input-container>
+
+                    <md-input-container class="md-block" md-no-float>
+                        <input type="password" name="newPassword" ng-model="vm.form.newPassword" 
+                               placeholder="New password" required autocomplete="new-password">
+                        <div ng-messages="forgotPasswordForm.newPassword.$error" role="alert">
+                            <div ng-message="required">
+                                <span>New password is required</span>
+                            </div>
+                            <div ng-message="passwordStrength">
+                                <span>Password does not meet requirements</span>
+                            </div>
+                        </div>
+                    </md-input-container>
+
+                    <password-requirements 
+                        form="forgotPasswordForm"
+                        model="vm.form.newPassword"
+                        field-name="newPassword">
+                    </password-requirements>
+
+                    <md-input-container class="md-block" md-no-float>
+                        <input type="password" name="confirmPassword" ng-model="vm.form.confirmPassword" 
+                               placeholder="Confirm new password" required
+                               ng-change="vm.validatePasswords()" autocomplete="new-password">
+                        <div ng-messages="forgotPasswordForm.confirmPassword.$error" role="alert">
+                            <div ng-message="required">
+                                <span>Please confirm your new password</span>
+                            </div>
+                            <div ng-message="compareTo">
+                                <span>Passwords must match</span>
+                            </div>
+                        </div>
+                    </md-input-container>
+
+                    <md-button type="submit" class="md-raised md-accent submit-button" aria-label="RESET PASSWORD"
+                               ng-click="vm.verifyAndResetPassword()"
+                               ng-disabled="forgotPasswordForm.$invalid || forgotPasswordForm.$pristine">
+                        RESET PASSWORD
+                    </md-button>
+                </div>
             </form>
 
             <div class="login" layout="row" layout-align="center center">

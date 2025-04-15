@@ -1,0 +1,74 @@
+.profile-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px;
+}
+
+.profile-card {
+    background: #ffffff;
+    border-radius: 8px;
+}
+
+.profile-header {
+    padding: 24px;
+}
+
+.profile-image-container {
+    margin-right: 24px;
+}
+
+.profile-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.default-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: #6E9B05;
+    padding: 24px;
+}
+
+.status-badge {
+    padding: 4px 12px;
+    border-radius: 16px;
+    font-size: 14px;
+    font-weight: 500;
+    margin-right: 16px;
+}
+
+.status-active {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.status-inactive {
+    background-color: #ffebee;
+    color: #c62828;
+}
+
+.account-number {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 14px;
+}
+
+.detail-section {
+    padding: 24px;
+}
+
+.detail-item {
+    margin-bottom: 16px;
+}
+
+.label {
+    font-weight: 500;
+    min-width: 120px;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.value {
+    color: rgba(0, 0, 0, 0.87);
+} 

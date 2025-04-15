@@ -1,0 +1,90 @@
+<div class="md-padding">
+    <md-card>
+        <md-card-title>
+            <md-card-title-text>
+                <span class="md-headline">{{vm.isEditing ? 'Edit Survey' : 'Take Survey'}}</span>
+            </md-card-title-text>
+        </md-card-title>
+        <md-divider></md-divider>
+
+        <md-card-content class="md-padding">
+            <div ng-if="vm.showAlreadySubmittedBanner" class="md-warn" layout="row" layout-align="space-between center" style="background-color: #fff3e0; padding: 16px; margin-bottom: 16px; border-radius: 4px;">
+                <span class="md-body-1" style="color: #e65100;">
+                    <md-icon class="material-icons" style="vertical-align: middle; margin-right: 8px;">info</md-icon>
+                    You have already submitted this survey. Your previous responses are shown below.
+                </span>
+                <div>
+                    <md-button class="md-primary" ng-click="vm.isEditing = true; loadExistingResponses()">
+                        <md-icon class="material-icons">edit</md-icon>
+                        Edit Responses
+                    </md-button>
+                    <md-button class="md-icon-button" ng-click="vm.showAlreadySubmittedBanner = false; vm.isEditing = false">
+                        <md-icon class="material-icons">close</md-icon>
+                    </md-button>
+                </div>
+            </div>
+
+            <div flex layout="row" layout-align="center center" ng-if="vm.loadingSurveys">
+                <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                <span class="md-padding">Loading {{vm.isEditing ? 'Survey Responses' : 'Available Surveys'}}...</span>
+            </div>
+
+            <div flex layout="column" layout-align="center center" ng-if="vm.loadingError">
+                <p class="md-body-1">Failed to load {{vm.isEditing ? 'survey responses' : 'surveys'}}. Please try again.</p>
+                <md-button class="md-primary" ng-click="vm.retryLoading()">
+                    <md-icon class="material-icons">refresh</md-icon>
+                    Retry
+                </md-button>
+            </div>
+
+            <div ng-if="!vm.loadingSurveys && !vm.loadingError">
+                <md-input-container class="md-block" ng-if="!vm.isEditing">
+                    <label>Select Survey</label>
+                    <md-select ng-model="vm.selectedSurvey" ng-change="vm.onSurveySelect()">
+                        <md-option ng-repeat="survey in vm.allSurveyData" ng-value="survey">
+                            {{survey.name}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+
+                <div ng-if="vm.isEditing" class="md-padding">
+                    <h2 class="md-title">{{vm.surveyData.name}}</h2>
+                </div>
+
+                <div ng-if="vm.componentGroups.length" class="survey-questions md-padding">
+                    <div ng-repeat="component in vm.componentGroups" class="component-group">
+                        <h2 class="md-title" ng-if="component[0].componentKey">{{component[0].componentKey}}</h2>
+                        
+                        <div ng-repeat="question in component" class="survey-question md-padding">
+                            <p class="md-subhead question-text" style="margin-bottom: 8px;">{{question.text}}</p>
+                            <md-radio-group ng-model="question.selectedResponseId" class="md-primary radio-group">
+                                <md-radio-button ng-repeat="option in question.responseDatas" 
+                                               ng-value="option.id"
+                                               ng-checked="option.id === question.answer.id"
+                                               class="md-accent">
+                                    {{option.text}}
+                                </md-radio-button>
+                            </md-radio-group>
+                            <p ng-if="question.answer" class="selected-answer" style="margin-top: 8px; color: #6E9B05;">
+                                Your answer is: {{question.answer.text}}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div layout="row" layout-align="end center" class="md-padding">
+                        <md-button class="md-raised" ng-click="vm.cancel()" ng-disabled="vm.submitting">
+                            Cancel
+                        </md-button>
+                        <md-button class="md-raised" 
+                                 style="background-color: #6E9B05; color: white;" 
+                                 ng-click="vm.submitSurvey()"
+                                 ng-disabled="vm.submitting">
+                            <md-icon class="material-icons">check</md-icon>
+                            {{vm.submitting ? 'Submitting...' : (vm.isEditing ? 'Update Responses' : 'Submit')}}
+                        </md-button>
+                    </div>
+                </div>
+            </div>
+        </md-card-content>
+    </md-card>
+</div> 

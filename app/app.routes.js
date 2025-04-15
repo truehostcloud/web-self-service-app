@@ -103,16 +103,6 @@
                         authorizedRoles: [USER_ROLES.user]
                     }
                 })
-                .state('app.profile', {
-                    url: '/charges',
-                    templateUrl: 'src/common/coming-soon.html',
-                    controller: 'ClientCtrl',
-                    controllerAs: 'vm',
-                    data: {
-                        title: 'Profile',
-                        authorizedRoles: [USER_ROLES.user]
-                    }
-                })
                 .state('app.transfers', {
                     url: '/transfers',
                     templateUrl: 'src/transfers/transfers.html',
@@ -245,6 +235,44 @@
                         title: 'Verify User'
                     }
                 })
+                .state('app.documents', {
+                    url: '/documents',
+                    templateUrl: 'src/upload-documents/documents-list.html',
+                    controller: 'DocumentsListCtrl',
+                    controllerAs: 'vm',
+                    data: {
+                        title: 'Documents',
+                        authorizedRoles: [USER_ROLES.user]
+                    }
+                })
+                .state('app.surveys', {
+                    url: '/surveys',
+                    templateUrl: 'src/surveys/surveys.html',
+                    controller: 'SurveysCtrl',
+                    controllerAs: 'vm'
+                })
+                .state('app.takeSurvey', {
+                    url: '/surveys/take-survey',
+                    templateUrl: 'src/surveys/take-survey/take-survey.html',
+                    controller: 'TakeSurveyCtrl',
+                    controllerAs: 'vm'
+                })
+                .state('app.editSurvey', {
+                    url: '/surveys/edit-survey/:surveyId',
+                    templateUrl: 'src/surveys/edit-survey/edit-survey.html',
+                    controller: 'EditSurveyCtrl',
+                    controllerAs: 'vm'
+                })
+                .state('app.profile', {
+                    url: '/profile',
+                    templateUrl: 'src/common/profile/profile.html',
+                    controller: 'ProfileCtrl',
+                    controllerAs: 'vm',
+                    data: {
+                        title: 'Profile',
+                        authorizedRoles: [USER_ROLES.user]
+                    }
+                })                
             }
         )
 })();

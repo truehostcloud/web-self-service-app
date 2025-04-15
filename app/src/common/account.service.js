@@ -50,6 +50,21 @@
             return storageService.getItem('client_id');
         }
 
+        this.requestPasswordReset = function(email) {
+            return $resource(BASE_URL + '/self/password/reset', {}, {
+                post: { method: 'POST' }
+            }).post({ email: email }).$promise;
+        };
+
+        this.verifyAndResetPassword = function(token, newPassword) {
+            return $resource(BASE_URL + '/self/password/verify', {}, {
+                post: { method: 'POST' }
+            }).post({
+                token: token,
+                newPassword: newPassword
+            }).$promise;
+        };
+
     }
 
 })();

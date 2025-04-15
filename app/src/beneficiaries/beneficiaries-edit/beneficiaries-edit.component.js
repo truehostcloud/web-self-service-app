@@ -49,6 +49,7 @@
                     $mdToast.simple()
                         .textContent('Beneficiary Updated Successfully')
                         .position('top right')
+                        .toastClass('md-success')
                 );
             }, function (resp) {
                 var errors = '';
@@ -62,6 +63,7 @@
                     $mdToast.simple()
                         .textContent('Error in Adding Beneficiary: ' + errors)
                         .position('top right')
+                        .toastClass('md-error')
                 );
 
             });

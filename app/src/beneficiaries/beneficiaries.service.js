@@ -21,6 +21,10 @@
                 }
             });
         }
+
+        this.offices = function() {
+            return $resource(BASE_URL + '/self/offices');
+        }
     }
 
 })();

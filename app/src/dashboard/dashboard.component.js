@@ -52,15 +52,17 @@
         function getDashboardData() {
             AccountService.getClientId().then(function (clientId) {
                 AccountService.getAllAccounts(clientId).get().$promise.then(function(data) {
-                    vm.dashboardData.loanAccounts = data.loanAccounts;
-                    vm.dashboardData.savingsAccounts = data.savingsAccounts;
-                    vm.dashboardData.shareAccounts = data.shareAccounts;
-                    vm.dashboardData.totalAccounts = vm.dashboardData.loanAccounts.length + vm.dashboardData.savingsAccounts.length + vm.dashboardData.shareAccounts.length
-                    vm.dashboardData.totalSavings = data.savingsAccounts.reduce(getTotalSavings, 0).toFixed(2);
-                    vm.dashboardData.totalLoan = data.loanAccounts.reduce(getTotalLoan, 0).toFixed(2);
-                    vm.dashboardData.loanAccountsOverview = getChartData(data.loanAccounts);
-                    vm.dashboardData.savingsAccountsOverview = getChartData(data.savingsAccounts);
-                    vm.dashboardData.shareAccountsOverview = getChartData(data.shareAccounts);
+                    vm.dashboardData.loanAccounts = data.loanAccounts || [];
+                    vm.dashboardData.savingsAccounts = data.savingsAccounts || [];
+                    vm.dashboardData.shareAccounts = data.shareAccounts || [];
+                    vm.dashboardData.totalAccounts = (vm.dashboardData.loanAccounts.length + 
+                        vm.dashboardData.savingsAccounts.length + 
+                        vm.dashboardData.shareAccounts.length) || 0;
+                    vm.dashboardData.totalSavings = (data.savingsAccounts || []).reduce(getTotalSavings, 0).toFixed(2);
+                    vm.dashboardData.totalLoan = (data.loanAccounts || []).reduce(getTotalLoan, 0).toFixed(2);
+                    vm.dashboardData.loanAccountsOverview = getChartData(vm.dashboardData.loanAccounts);
+                    vm.dashboardData.savingsAccountsOverview = getChartData(vm.dashboardData.savingsAccounts);
+                    vm.dashboardData.shareAccountsOverview = getChartData(vm.dashboardData.shareAccounts);
                 });
             })
         }

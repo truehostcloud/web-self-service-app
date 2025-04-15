@@ -1,0 +1,67 @@
+<div class="datatable-cont md-padding">
+    <md-card>
+        <md-card-title layout-xs="column">
+            <md-card-title-text flex-xs>
+                <span class="md-headline">My Survey Submissions</span>
+            </md-card-title-text>
+            <md-button class="md-raised" style="background-color: #6E9B05; color: white;" ng-click="vm.takeSurvey()">
+                <md-icon class="material-icons">list_alt</md-icon>
+                Take Survey
+            </md-button>
+        </md-card-title>
+        <md-divider></md-divider>
+        <md-card-content class="md-padding">
+            <md-input-container md-no-float class="md-block search-input">
+                <md-icon md-svg-src="assets/images/ic_search_black_24px.svg"></md-icon>
+                <input ng-model="vm.surveyFilter" type="text" placeholder="Filter">
+            </md-input-container>
+
+            <div flex layout="row" layout-align="center center" ng-if="vm.loadingSurveys">
+                <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                <span class="md-padding">Loading Survey Submissions...</span>
+            </div>
+
+            <div flex layout="column" layout-align="center center" ng-if="vm.loadingError">
+                <p class="md-body-1">Failed to load survey submissions. Please try again.</p>
+                <md-button class="md-primary" ng-click="vm.retryLoading()">
+                    <md-icon class="material-icons">refresh</md-icon>
+                    Retry
+                </md-button>
+            </div>
+
+            <md-table-container ng-if="!vm.loadingSurveys && !vm.loadingError">
+                <table md-table ng-model="vm.selected" md-progress="vm.promise">
+                    <thead md-head md-order="vm.query.orderBy">
+                        <tr md-row>
+                            <th md-column md-order-by="surveyName" style="text-align: center">Survey Name</th>
+                            <th md-column md-order-by="username" style="text-align: center">Submitted By</th>
+                            <th md-column md-order-by="scorecardValues[0].createdOn" style="text-align: center">Submission Date</th>
+                            <th md-column md-numeric md-order-by="scorecardValues[0].value" style="text-align: center">Score</th>
+                            <th md-column style="text-align: center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody md-body>
+                        <tr md-row md-select="survey" md-select-id="{{survey.id}}" md-auto-select
+                            ng-repeat="survey in vm.surveys | filter: vm.surveyFilter | orderBy: vm.query.orderBy | limitTo: vm.query.limit : (vm.query.offset - 1) * vm.query.limit">
+                            <td md-cell style="text-align: center">{{survey.surveyName}}</td>
+                            <td md-cell style="text-align: center">{{survey.username}}</td>
+                            <td md-cell style="text-align: center">{{survey.scorecardValues[0].createdOn | date:'medium'}}</td>
+                            <td md-cell style="text-align: center">{{survey.scorecardValues[0].value}}</td>
+                            <td md-cell style="text-align: center">
+                                <md-button class="md-icon-button" ng-click="vm.editSurvey(survey)" aria-label="Edit Survey" ng-if="survey.scorecardValues && survey.scorecardValues.length > 0">
+                                    <md-icon class="material-icons">edit</md-icon>
+                                </md-button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </md-table-container>
+            <md-table-pagination ng-if="!vm.loadingSurveys && !vm.loadingError" 
+                                md-limit="vm.query.limit" 
+                                md-page="vm.query.offset"
+                                md-total="{{vm.surveys.length}}" 
+                                md-page-select>
+            </md-table-pagination>
+        </md-card-content>
+    </md-card>
+</div> 
