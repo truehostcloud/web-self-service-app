@@ -77,15 +77,30 @@
             if (vm.selectedSurvey) {
                 vm.surveyData = vm.selectedSurvey;
                 
-                vm.surveyData.questionDatas.forEach(function(question) {
-                    question.answer = null;
-                });
-                vm.componentGroups = groupByComponent(vm.surveyData.questionDatas);
-                
-                
-                if (vm.isEditing) {
-                    loadExistingResponses();
-                }
+                // Check if survey has already been submitted
+                SurveysService.getClientSurveySubmission(vm.surveyData.id, vm.clientId)
+                    .then(function(response) {
+                        if (response.data && response.data.length > 0) {
+                            vm.showAlreadySubmittedBanner = true;
+                            vm.isEditing = true;
+                            loadExistingResponses();
+                        } else {
+                            vm.showAlreadySubmittedBanner = false;
+                            vm.isEditing = false;
+                            vm.surveyData.questionDatas.forEach(function(question) {
+                                question.answer = null;
+                            });
+                            vm.componentGroups = groupByComponent(vm.surveyData.questionDatas);
+                        }
+                    })
+                    .catch(function(error) {
+                        $mdToast.show(
+                            $mdToast.simple()
+                                .textContent('Failed to check survey status. Please try again.')
+                                .position('top right')
+                                .toastClass('md-error')
+                        );
+                    });
             }
         }
         
