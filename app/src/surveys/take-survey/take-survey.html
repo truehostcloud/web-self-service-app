@@ -10,12 +10,18 @@
         <md-card-content class="md-padding">
             <div ng-if="vm.showAlreadySubmittedBanner" class="md-warn" layout="row" layout-align="space-between center" style="background-color: #fff3e0; padding: 16px; margin-bottom: 16px; border-radius: 4px;">
                 <span class="md-body-1" style="color: #e65100;">
-                    <md-icon class="material-icons" style="vertical-align: middle; margin-right: 8px;">warning</md-icon>
-                    You have already submitted this survey
+                    <md-icon class="material-icons" style="vertical-align: middle; margin-right: 8px;">info</md-icon>
+                    You have already submitted this survey. Your previous responses are shown below.
                 </span>
-                <md-button class="md-icon-button" ng-click="vm.showAlreadySubmittedBanner = false">
-                    <md-icon class="material-icons">close</md-icon>
-                </md-button>
+                <div>
+                    <md-button class="md-primary" ng-click="vm.isEditing = true; loadExistingResponses()">
+                        <md-icon class="material-icons">edit</md-icon>
+                        Edit Responses
+                    </md-button>
+                    <md-button class="md-icon-button" ng-click="vm.showAlreadySubmittedBanner = false; vm.isEditing = false">
+                        <md-icon class="material-icons">close</md-icon>
+                    </md-button>
+                </div>
             </div>
 
             <div flex layout="row" layout-align="center center" ng-if="vm.loadingSurveys">
