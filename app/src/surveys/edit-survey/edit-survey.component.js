@@ -14,11 +14,13 @@
         vm.componentGroups = [];
         vm.clientId = null;
         vm.isEditing = true;
+        vm.userResponses = [];
         
         vm.submitSurvey = submitSurvey;
         vm.cancel = cancel;
         vm.retryLoading = loadSurvey;
         vm.loadExistingResponses = loadExistingResponses;
+        vm.isChoiceSelected = isChoiceSelected;
         
         function groupByComponent(questions) {
             var groups = {};
@@ -27,7 +29,6 @@
                 if (!groups[key]) {
                     groups[key] = [];
                 }
-                question.answer = null;
                 groups[key].push(question);
             });
             return Object.values(groups);
@@ -39,15 +40,36 @@
             
             AccountService.getClientId().then(function(clientId) {
                 vm.clientId = clientId;
+                // First load the client's survey responses
+                return SurveysService.getClientSurveySubmission($stateParams.surveyId, clientId);
+            }).then(function(response) {
+                vm.userResponses = response.data;
+                // Then load the survey questions and choices
                 return SurveysService.getAllSurveys();
             }).then(function(response) {
-               vm.surveyData = response.data.find(function(survey) {
+                vm.surveyData = response.data.find(function(survey) {
                     return survey.id === parseInt($stateParams.surveyId);
                 });
                
                 if (vm.surveyData) {
+                    // Find the response for this survey
+                    var surveyResponse = vm.userResponses.find(function(r) {
+                        return r.surveyId === vm.surveyData.id;
+                    });
+
+                    if (surveyResponse) {
+                        // Set the selectedResponseId for each question
+                        vm.surveyData.questionDatas.forEach(function(question) {
+                            var questionResponse = surveyResponse.scorecardValues.find(function(response) {
+                                return response.questionId === question.id;
+                            });
+                            if (questionResponse) {
+                                question.selectedResponseId = questionResponse.responseId;
+                            }
+                        });
+                    }
+
                     vm.componentGroups = groupByComponent(vm.surveyData.questionDatas);
-                    loadExistingResponses();
                 } else {
                     vm.loadingError = true;
                     $mdToast.show(
@@ -59,7 +81,7 @@
                 }
                 
                 vm.loadingSurveys = false;
-            }).catch(function(error) {
+            }).catch(function() {
                 vm.loadingSurveys = false;
                 vm.loadingError = true;
                 $mdToast.show(
@@ -83,7 +105,7 @@
             }
             
             var unansweredQuestions = vm.surveyData.questionDatas.some(function(q) {
-                return !q.answer;
+                return !q.selectedResponseId;
             });
             
             if (unansweredQuestions) {
@@ -99,10 +121,13 @@
             var formData = {
                 clientId: vm.clientId,
                 scorecardValues: vm.surveyData.questionDatas.map(function(q) {
+                    var selectedOption = q.responseDatas.find(function(option) {
+                        return option.id === q.selectedResponseId;
+                    });
                     return {
                         questionId: q.id,
-                        responseId: q.answer.id,
-                        value: q.answer.value
+                        responseId: q.selectedResponseId,
+                        value: selectedOption ? selectedOption.value : 0
                     };
                 })
             };
@@ -118,7 +143,7 @@
                     );
                     $state.go('app.surveys');
                 })
-                .catch(function(error) {
+                .catch(function() {
                     $mdToast.show(
                         $mdToast.simple()
                             .textContent('Failed to update survey. Please try again.')
@@ -134,36 +159,39 @@
         function loadExistingResponses() {
             SurveysService.getClientSurveySubmission(vm.surveyData.id, vm.clientId)
                 .then(function(response) {
-                    var submissions = response.data;
-                    if (submissions && submissions.length > 0) {
-                        var allPreviousResponses = submissions.reduce(function(acc, submission) {
-                            return acc.concat(submission.scorecardValues);
-                        }, []);
+                    vm.userResponses = response.data;
+                    
+                    if (vm.userResponses && vm.userResponses.length > 0) {
+                        var surveyResponse = vm.userResponses.find(function(response) {
+                            return response.surveyId === vm.surveyData.id;
+                        });
 
-                        vm.surveyData.questionDatas.forEach(function(question) {
-                            question.answer = null;
-                            question.selectedResponseId = null;
-                        });
-                        
-                        allPreviousResponses.forEach(function(response) {
-                            var question = vm.surveyData.questionDatas.find(function(q) {
-                                return q.id === response.questionId;
-                            });
-                            if (question) {
-                                var selectedOption = question.responseDatas.find(function(option) {
-                                    return option.id === response.responseId;
+                        if (surveyResponse) {
+                            vm.surveyData.questionDatas.forEach(function(question) {
+                                question.answer = null;
+                                question.selectedResponseId = null;
+                                
+                                var questionResponse = surveyResponse.scorecardValues.find(function(response) {
+                                    return response.questionId === question.id;
                                 });
-                                if (selectedOption) {
-                                    question.answer = selectedOption;
-                                    question.selectedResponseId = selectedOption.id;
+                                
+                                if (questionResponse) {
+                                    var selectedOption = question.responseDatas.find(function(option) {
+                                        return option.id === questionResponse.responseId;
+                                    });
+                                    
+                                    if (selectedOption) {
+                                        question.answer = selectedOption;
+                                        question.selectedResponseId = selectedOption.id;
+                                    }
                                 }
+                            });
+                            
+                            vm.componentGroups = groupByComponent(vm.surveyData.questionDatas);
+                            
+                            if (!$scope.$$phase) {
+                                $scope.$apply();
                             }
-                        });
-                        
-                        vm.componentGroups = groupByComponent(vm.surveyData.questionDatas);
-                        
-                        if (!$scope.$$phase) {
-                            $scope.$apply();
                         }
                     } else {
                         $mdToast.show(
@@ -174,7 +202,7 @@
                         );
                     }
                 })
-                .catch(function(error) {
+                .catch(function() {
                     $mdToast.show(
                         $mdToast.simple()
                             .textContent('Failed to load existing responses. Please try again.')
@@ -182,6 +210,20 @@
                             .toastClass('md-error')
                     );
                 });
+        }
+
+        function isChoiceSelected(questionId, choiceId) {
+            if (!vm.userResponses || !vm.surveyData) return false;
+            
+            var response = vm.userResponses.find(function(r) {
+                return r.surveyId === vm.surveyData.id;
+            });
+            
+            if (!response || !response.scorecardValues) return false;
+
+            return response.scorecardValues.some(function(scorecard) {
+                return scorecard.questionId === questionId && scorecard.responseId === choiceId;
+            });
         }
         
         $scope.$watch('vm.componentGroups', function(newVal) {
