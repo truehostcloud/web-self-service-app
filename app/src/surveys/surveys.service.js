@@ -103,10 +103,6 @@
                 return $q.reject('Invalid scorecard values format');
             }
 
-            var now = new Date();
-            var localDateTimeFormat = now.toISOString().split('.')[0].replace('Z', '');
-            var offsetDateTimeFormat = now.toISOString().split('.')[0] + 'Z';
-
             var validatedScorecardValues = formData.scorecardValues.map(function(response) {
                 if (!response.questionId || !response.responseId || response.value === undefined) {
                     throw new Error('Invalid scorecard value format');
@@ -114,8 +110,7 @@
                 return {
                     questionId: parseInt(response.questionId),
                     responseId: parseInt(response.responseId),
-                    value: parseInt(response.value),
-                    createdOn: offsetDateTimeFormat
+                    value: parseInt(response.value)
                 };
             });
 
@@ -123,8 +118,6 @@
                 method: 'PUT',
                 url: BASE_URL + '/self/surveys/scorecards/' + surveyId + '/clients/' + clientId,
                 data: {
-                    clientId: parseInt(clientId),
-                    createdOn: localDateTimeFormat,
                     scorecardValues: validatedScorecardValues
                 }
             });
